@@ -4,13 +4,23 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 10f;
-    public float damage;
+    private float damage;
 
     private Transform target;
 
     public void SetTarget(Transform _target)
     {
         target = _target;
+        if (target != null)
+        {
+            Vector2 direction = (target.position - transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+    public void SetDamage(float _damage)
+    {
+        damage = _damage;
     }
 
     void Update()
@@ -22,6 +32,9 @@ public class Bullet : MonoBehaviour
         }
 
         Vector2 direction = (target.position - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, angle), rotateSpeed * Time.deltaTime);
+
         transform.Translate(direction * speed * Time.deltaTime, Space.World);
 
         // Kiểm tra va chạm đơn giản bằng khoảng cách
@@ -34,11 +47,17 @@ public class Bullet : MonoBehaviour
                 health.TakeDamage(damage);
             }
 
+            foreach (var effect in GetComponents<IBulletEffect>())
+            {
+                effect.ApplyEffect(target);
+            }
+
             ReturnToPool();
         }
     }
 
     public GameObject prefabOrigin;
+    private float rotateSpeed = 360f; 
 
     void ReturnToPool()
     {

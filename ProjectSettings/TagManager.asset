@@ -45,6 +45,9 @@ TagManager:
   - name: Turret
     uniqueID: 3411722135
     locked: 0
+  - name: EffectBullet
+    uniqueID: 1912532479
+    locked: 0
   - name: Bullet
     uniqueID: 1479343153
     locked: 0
