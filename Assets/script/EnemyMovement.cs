@@ -5,11 +5,15 @@ public class EnamyMovement : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rb;
 
-    [Header("Attributes")]
-    [SerializeField] private float moveSpeed = 2f;
-
     private Transform target;
     private int partIndex = 0;
+
+    private float moveSpeed;
+
+    public void Setup(float speed)
+    {
+        moveSpeed = speed;
+    }
 
     void Start()
     {
@@ -37,9 +41,13 @@ public class EnamyMovement : MonoBehaviour
             partIndex++;
             if (partIndex == LevelManager.main.Path.Length)
             {
+                UIManager.instance.DecreaseHP(1); // Trừ máu khi quái đi đến cuối
+                EnemySpawner.onEnemyDestroy.Invoke();
+                EnemySpawner.OnEnemyReachEnd?.Invoke(); // Gọi sự kiện trừ máu
                 Destroy(gameObject);
                 return;
             }
+
             else
             {
                 target = LevelManager.main.Path[partIndex];
@@ -52,7 +60,7 @@ public class EnamyMovement : MonoBehaviour
         if (rb != null && target != null)
         {
             Vector2 direction = (target.position - transform.position).normalized;
-            rb.linearVelocity = direction * moveSpeed; // đổi lại nếu chưa dùng linearVelocity
+            rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
         }
     }
 }
