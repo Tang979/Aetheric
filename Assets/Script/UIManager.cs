@@ -60,8 +60,10 @@ public class UIManager : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("Game Over");
-        // TODO: Hiển thị UI Game Over hoặc load scene
-    }
+        Time.timeScale = 0f; // Dừng thời gian trong game
 
+        // TODO: Nếu có màn hình Game Over, kích hoạt nó ở đây
+        // Ví dụ: gameOverPanel.SetActive(true);
+    }
 
 }
