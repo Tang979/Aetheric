@@ -36,24 +36,25 @@ public class EnamyMovement : MonoBehaviour
 
     void Update()
     {
+        if (target == null || LevelManager.main.Path.Length == 0) return;
+
         if (Vector2.Distance(target.position, transform.position) <= 0.1f)
         {
             partIndex++;
-            if (partIndex == LevelManager.main.Path.Length)
+
+            if (partIndex >= LevelManager.main.Path.Length)
             {
-                UIManager.instance.DecreaseHP(1); // Trừ máu khi quái đi đến cuối
+                // Enemy đã đến đích
+                UIManager.instance.DecreaseHP(1); // nếu dùng
                 EnemySpawner.onEnemyDestroy.Invoke();
-                EnemySpawner.OnEnemyReachEnd?.Invoke(); // Gọi sự kiện trừ máu
                 Destroy(gameObject);
                 return;
             }
 
-            else
-            {
-                target = LevelManager.main.Path[partIndex];
-            }
+            target = LevelManager.main.Path[partIndex];
         }
     }
+
 
     private void FixedUpdate()
     {

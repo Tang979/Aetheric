@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void TogglePause()
+/*    public void TogglePause()
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
     {
         return isPaused;
     }
-
+*/
     private void GameOver()
     {
         isGameOver = true;
