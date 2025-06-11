@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private int startingHP = 20;
     private int currentHP;
     private bool isGameOver = false;
+    private bool isPaused;
 
     private void Awake()
     {
@@ -54,6 +55,19 @@ public class UIManager : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
+
+        Debug.Log(isPaused ? "Game Paused" : "Game Resumed");
+    }
+
+    public bool IsPaused()
+    {
+        return isPaused;
     }
 
     private void GameOver()
