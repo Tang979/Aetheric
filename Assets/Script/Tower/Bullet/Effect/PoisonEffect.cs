@@ -2,14 +2,23 @@ using UnityEngine;
 
 public class PoisonEffect : MonoBehaviour, IBulletEffect
 {
-    // This method applies the poison effect to the target Transform
-    [Header("Poison Effect")]
-    public float poisonDuration = 5f;
-    public float poisonDamage = 10f;
-    public float range = 3f;
+    public float duration = 4f;
+    public float damagePerTick = 0.5f;
+    public float tickRate = 1f;
+    [Range(0f, 1f)] public float areaChance = 0.2f;
+    public GameObject poisonAreaPrefab;
 
     public void ApplyEffect(Transform target)
     {
-        
+        var status = target.GetComponent<EnemyStatus>();
+        if (status != null)
+        {
+            status.ApplyEffect(StatusEffectType.Poison, duration, tickRate, damagePerTick);
+
+            if (Random.value <= areaChance && poisonAreaPrefab != null)
+            {
+                Instantiate(poisonAreaPrefab, target.position, Quaternion.identity);
+            }
+        }
     }
 }

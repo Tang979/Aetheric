@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666f0f598e8700a4fbf831a14dbfd540, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  towerId: 
+  attackType: 0
+  sprayConfig:
+    attackDuration: 0
+    cooldown: 0
+    tickRate: 0
+  projectileConfig:
+    attackSpeed: 1.5
+  attackRange: 5
+  baseDamage: 1
+  bulletPrefab: {fileID: 4915179156190182582, guid: 6066219a240fd2942a38470a5cfe4e60, type: 3}

@@ -31,18 +31,23 @@ public class ProjectileAttack : MonoBehaviour, ITowerAttack
 
     void Shoot(Transform target)
     {
-        GameObject bullet = BulletPool.Instance.GetBullet(tower.data.bulletPrefab);
+        GameObject prefabToUse = tower.data.bulletPrefab;
+        float usedDamage = tower.data.baseDamage;
+
+        foreach (var mod in GetComponents<ISpecialBullet>())
+        {
+            if (mod.TryModifyBullet(tower, ref prefabToUse, ref usedDamage))
+                break;
+        }
+
+        GameObject bullet = BulletPool.Instance.GetBullet(prefabToUse);
         bullet.transform.position = tower.firePoint.position;
         bullet.transform.rotation = Quaternion.identity;
+
         Bullet b = bullet.GetComponent<Bullet>();
-        b.prefabOrigin = tower.data.bulletPrefab;
+        b.prefabOrigin = prefabToUse;
         b.SetTarget(target);
-        b.damage = tower.data.baseDamage;
-        if (b != null)
-        {
-            b.SetTarget(target);
-            b.damage = tower.data.baseDamage;
-        }
+        b.SetDamage(usedDamage);
     }
 
 }
