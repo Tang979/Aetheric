@@ -25,7 +25,6 @@ public class TargetingSystem : MonoBehaviour
                 currentTarget = null;
             }
         }
-
         return currentTarget;
     }
 

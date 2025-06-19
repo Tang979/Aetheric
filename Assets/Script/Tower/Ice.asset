@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666f0f598e8700a4fbf831a14dbfd540, type: 3}
   m_Name: Ice
   m_EditorClassIdentifier: 
-  towerId: 
+  towerName: Ice
+  isSpecialTower: 0
+  isBasicTower: 0
+  icon: {fileID: -1496339858, guid: 66544220b973f1c45b64cfc9d826ba52, type: 3}
+  descriptionSkill: 
+  cost: 0
   attackType: 0
   sprayConfig:
     attackDuration: 0

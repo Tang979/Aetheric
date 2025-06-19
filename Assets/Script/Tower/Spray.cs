@@ -12,19 +12,11 @@ public class Spray : MonoBehaviour
     private float rotateSpeed = 90f; // Rotation speed of the cone
     private VisualEffect sprayVFX;
     public LayerMask enemyLayer;
-    private bool isActive = false;
-
-    private float durationTimer = 0f;
-    private float attackDuration;
     private Transform currentTarget = null;
 
     public void SetDamage(float damage)
     {
         this.damage = damage;
-    }
-    public bool IsActive()
-    {
-        return isActive;
     }
     public void SetTickRate(float rate)
     {
@@ -47,7 +39,6 @@ public class Spray : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isActive) return;
         if (currentTarget == null)
         {
             Stop();
@@ -59,7 +50,7 @@ public class Spray : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, angle), rotateSpeed * Time.deltaTime);
 
         Vector2 origin = transform.position;
-        
+
         if (Time.time - lastCollisionCheckTime >= COLLISION_CHECK_INTERVAL)
         {
             cachedTargets = GetCollidersInCone(origin, range, coneAngle, enemyLayer);
@@ -67,7 +58,6 @@ public class Spray : MonoBehaviour
         }
 
         tickTimer += Time.deltaTime;
-        durationTimer += Time.deltaTime;
         if (tickTimer >= tickRate)
         {
             tickTimer = 0f;
@@ -80,13 +70,6 @@ public class Spray : MonoBehaviour
                 }
             }
         }
-
-        if (durationTimer >= attackDuration)
-        {
-            Stop();
-        }
-
-
     }
 
     // Get all colliders in a 2D cone shape on the Y plane
@@ -112,11 +95,8 @@ public class Spray : MonoBehaviour
         return targets;
     }
 
-    public void Play(Transform target, float duration)
+    public void Play(Transform target)
     {
-        isActive = true;
-        durationTimer = 0f;
-        attackDuration = duration;
         currentTarget = target;
 
         if (sprayVFX != null) sprayVFX.Play();
@@ -124,7 +104,6 @@ public class Spray : MonoBehaviour
 
     public void Stop()
     {
-        isActive = false;
         if (sprayVFX != null) sprayVFX.Stop();
     }
 
