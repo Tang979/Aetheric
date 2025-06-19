@@ -8,8 +8,11 @@ public class TowerDataEditor : Editor
     {
         TowerData towerData = (TowerData)target;
         serializedObject.Update();
-        towerData.towerId = EditorGUILayout.TextField("Tower ID", towerData.towerId);
-        towerData.name = EditorGUILayout.TextField("Tower Name", towerData.name);
+        towerData.towerName = EditorGUILayout.TextField("Tower Name", towerData.towerName);
+        towerData.isBasicTower = EditorGUILayout.Toggle("Is Basic Tower", towerData.isBasicTower);
+        towerData.icon = (Sprite)EditorGUILayout.ObjectField("Icon", towerData.icon, typeof(Sprite), false);
+        towerData.descriptionSkill = EditorGUILayout.TextField("Description Skill", towerData.descriptionSkill);
+        towerData.cost = EditorGUILayout.IntField("Cost", towerData.cost);
         towerData.attackType = (TowerData.AttackType)EditorGUILayout.EnumPopup("Attack Type", towerData.attackType);
         towerData.attackRange = EditorGUILayout.FloatField("Attack Range", towerData.attackRange);
         towerData.baseDamage = EditorGUILayout.FloatField("Base Damage", towerData.baseDamage);

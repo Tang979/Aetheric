@@ -2264,7 +2264,7 @@ MonoBehaviour:
   - {fileID: 8926484042661616220}
   m_ExposedName: Color
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:

@@ -8,8 +8,6 @@ public class SprayAttack : MonoBehaviour, ITowerAttack
     private TargetingSystem targetingSystem;
     private GameObject sprayPrefab;
     private Spray spray;
-    private float cooldown = 0f;
-    private bool isSpraying = false;
 
     public void Init(TowerInstance tower)
     {
@@ -26,29 +24,10 @@ public class SprayAttack : MonoBehaviour, ITowerAttack
     public void Tick(float deltaTime)
     {
         var target = targetingSystem.GetCurrentTarget();
-        if (target == null)
+        if (target != null)
         {
             spray.SetTarget(target);
-        }
-        if (spray.IsActive()) return;
-        cooldown -= deltaTime;
-
-        // Nếu chưa spray và cooldown đã hết → bắt đầu
-        if (!isSpraying && cooldown <= 0f && target != null)
-        {
-            spray.Play(target, tower.data.sprayConfig.attackDuration);
-            isSpraying = true;
-            cooldown = tower.data.sprayConfig.cooldown;
-        }
-        // Nếu spray đã kết thúc → reset flag
-        if (isSpraying && !spray.IsActive())
-        {
-            isSpraying = false;
-        }
-        if (target == null)
-        {
-            spray.Stop();
-            isSpraying = false;
+            spray.Play(target);
         }
     }
 }

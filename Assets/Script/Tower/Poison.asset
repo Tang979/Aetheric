@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666f0f598e8700a4fbf831a14dbfd540, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  towerId: 
+  towerName: Poison
+  isSpecialTower: 0
+  isBasicTower: 0
+  icon: {fileID: -3004102886578502475, guid: a9ab12b0b4c93c342b12943f214fa619, type: 3}
+  descriptionSkill: 
+  cost: 0
   attackType: 0
   sprayConfig:
     attackDuration: 0
