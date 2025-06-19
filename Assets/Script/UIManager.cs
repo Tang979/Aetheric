@@ -20,6 +20,13 @@ public class UIManager : MonoBehaviour
     private bool isGameOver = false;
     private bool isPaused;
 
+    [Header("Special Tower UI")]
+    public GameObject specialTowerPanel;
+    public Transform buttonContainer; // nơi chứa các nút chọn
+    public GameObject buttonPrefab;
+
+    private TowerInstance currentTower;
+
     private void Awake()
     {
         if (instance != null && instance != this)

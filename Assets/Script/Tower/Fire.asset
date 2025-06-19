@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666f0f598e8700a4fbf831a14dbfd540, type: 3}
+  m_Name: Fire
+  m_EditorClassIdentifier: 
+  towerName: Fire
+  isSpecialTower: 0
+  isBasicTower: 0
+  icon: {fileID: 7650368358254182465, guid: 3e5b6d9837967934d9d79f87c699fb73, type: 3}
+  descriptionSkill: 
+  cost: 0
+  attackType: 1
+  sprayConfig:
+    attackDuration: 5
+    cooldown: 2
+    tickRate: 0.2
+  projectileConfig:
+    attackSpeed: 0
+  attackRange: 5
+  baseDamage: 0.3
+  bulletPrefab: {fileID: 6518515802239445656, guid: 5ea537d1752b3da4ba26ff9884b085cd, type: 3}
