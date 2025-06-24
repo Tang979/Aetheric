@@ -7,18 +7,20 @@ using UnityEngine.Events;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EnemyData[] enemyTypes;
-    [SerializeField] private int playerHP = 20;
+    [SerializeField] private EnemyData[] enemyTypes; 
+
+    [SerializeField] private int playerHP = 20; 
     [SerializeField] private int playerMoney = 100;
     [SerializeField] private int totalWaves = 10;
 
 
     [Header("Events")]
-    public static UnityEvent onEnemyDestroy = new UnityEvent();
+    public static UnityEvent onEnemyDestroy = new UnityEvent(); 
     public static UnityEvent OnEnemyReachEnd = new UnityEvent();
 
 
     private int currentWave = 1;
+
     private float timeSinceLastSpawn;
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
@@ -83,15 +85,16 @@ public class EnemySpawner : MonoBehaviour
 
         isSpawning = true;
 
-        if (currentWave >= 6)
-        {
-            enemiesLeftToSpawn = 3;
-        }
-        else
-        {
-            enemiesLeftToSpawn = Mathf.RoundToInt(currentEnemyData.baseEnemies * Mathf.Pow(currentWave, currentEnemyData.difficultyScalingFactor));
-        }
+        // Nếu bạn muốn wave 6 là đợt đặc biệt, giữ nguyên. Còn nếu không, bỏ đoạn if:
+        // Ví dụ: nếu bạn muốn wave 6 vẫn theo công thức, thì dùng luôn công thức dưới
+
+        enemiesLeftToSpawn = Mathf.RoundToInt(
+            currentEnemyData.baseEnemies * Mathf.Pow(currentWave, currentEnemyData.difficultyScalingFactor)
+        );
+
+        Debug.Log($"[StartWave] Wave {currentWave} - Spawn: {enemiesLeftToSpawn}");
     }
+
 
     private void EndWave()
     {
