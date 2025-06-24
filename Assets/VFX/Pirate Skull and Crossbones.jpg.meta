@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4081a04d0fe62ae4489494ff16fdb396
+guid: ed14915311fdc4546a049aff3768d44e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7414830730180813051
-    second: Button (1)_0
+      213: 5824269986692417602
+    second: Pirate Skull and Crossbones_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Button (1)_0
+      name: Pirate Skull and Crossbones_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 350
-        height: 140
+        width: 736
+        height: 736
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 50f1ce18cba391990800000000000000
-      internalID: -7414830730180813051
+      spriteID: 24845c0d1b6f3d050800000000000000
+      internalID: 5824269986692417602
       vertices: []
       indices: 
       edges: []

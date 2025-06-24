@@ -261,3 +261,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowMultiplier: 0.5
   duration: 3
+  iceVFXPrefab: {fileID: 3476816216163532144, guid: fd10ac4fe472d8e4ca22833dcf651897, type: 3}

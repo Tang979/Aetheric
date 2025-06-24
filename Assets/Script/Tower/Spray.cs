@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -18,9 +19,17 @@ public class Spray : MonoBehaviour
     {
         this.damage = damage;
     }
+    public float GetDamage()
+    {
+        return damage;
+    }
     public void SetTickRate(float rate)
     {
         tickRate = rate;
+    }
+    public float GetTickRate()
+    {
+        return tickRate;
     }
     public void SetTarget(Transform target)
     {
@@ -68,7 +77,12 @@ public class Spray : MonoBehaviour
                 {
                     enemyHealth.TakeDamage(damage);
                 }
+                foreach (var effect in GetComponents<IBulletEffect>())
+                {
+                    effect.ApplyEffect(target);
+                }
             }
+
         }
     }
 

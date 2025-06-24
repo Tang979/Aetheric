@@ -11,6 +11,8 @@ public class PoisonZone : MonoBehaviour
     private float tickTimer = 0f;
     private float lifeTimer = 0f;
 
+    public GameObject poisonVFXPrefab;
+
     void Update()
     {
         lifeTimer += Time.deltaTime;
@@ -39,6 +41,7 @@ public class PoisonZone : MonoBehaviour
             if (status != null)
             {
                 status.ApplyEffect(StatusEffectType.Poison, tickRate, tickRate, damagePerTick);
+                status.TryPlayVFX(StatusEffectType.Poison, poisonVFXPrefab, duration);
             }
         }
     }

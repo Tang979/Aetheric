@@ -1,13 +1,13 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum StatusEffectType
 {
-    Poison,
     Burn,
-    Freeze,
+    Poison,
     Slow,
+    Freeze,
     Stun
 }
 
@@ -31,9 +31,52 @@ public class StatusEffect
 public class EnemyStatus : MonoBehaviour
 {
     private Dictionary<StatusEffectType, StatusEffect> activeEffects = new();
+    private class VFXInstance
+    {
+        public GameObject vfxObject;
+        public Coroutine timerCoroutine;
+    }
+    private Dictionary<StatusEffectType, VFXInstance> activeVFX = new();
+
+    // ❗Ràng buộc loại trừ giữa các hiệu ứng
+    private static readonly Dictionary<StatusEffectType, StatusEffectType[]> conflictingEffects = new()
+    {
+        { StatusEffectType.Burn, new[] { StatusEffectType.Slow, StatusEffectType.Freeze } },
+        { StatusEffectType.Slow, new[] { StatusEffectType.Burn } },
+        { StatusEffectType.Freeze, new[] { StatusEffectType.Burn } }
+    };
 
     public void ApplyEffect(StatusEffectType type, float duration, float tickRate, float value)
     {
+        // 🔸 Xử lý mâu thuẫn với hiệu ứng đang tồn tại
+        if (conflictingEffects.TryGetValue(type, out var toRemoveList))
+        {
+            foreach (var conflict in toRemoveList)
+            {
+                if (activeEffects.TryGetValue(conflict, out var conflictEffect))
+                {
+                    StopCoroutine(conflictEffect.coroutine);
+                    activeEffects.Remove(conflict);
+
+                    // Gỡ VFX nếu có
+                    if (activeVFX.TryGetValue(conflict, out var vfx))
+                    {
+                        Destroy(vfx.vfxObject);
+                        StopCoroutine(vfx.timerCoroutine);
+                        activeVFX.Remove(conflict);
+                    }
+
+                    // Reset trạng thái nếu là Slow
+                    if (conflict == StatusEffectType.Slow)
+                    {
+                        GetComponent<EnemyMovement>()?.ResetSpeed();
+                        GetComponent<SpriteRenderer>().color = Color.white;
+                    }
+                }
+            }
+        }
+
+        // 🔸 Ghi đè nếu đã có
         if (activeEffects.TryGetValue(type, out var existing))
         {
             StopCoroutine(existing.coroutine);
@@ -48,32 +91,91 @@ public class EnemyStatus : MonoBehaviour
     {
         float timer = 0f;
         var health = GetComponent<EnemyHealth>();
+        var movement = GetComponent<EnemyMovement>();
+        var sprite = GetComponent<SpriteRenderer>();
+
+        // 🎯 Setup trước khi vòng lặp
+        switch (effect.type)
+        {
+            case StatusEffectType.Slow:
+                movement?.ApplySpeedMultiplier(effect.value);
+                if (sprite != null) sprite.color = new Color(0f, 0.196f, 0.749f); // Xanh dương
+                break;
+        }
 
         while (timer < effect.duration)
         {
-            switch (effect.type)
+            if (effect.tickRate > 0f)
             {
-                case StatusEffectType.Poison:
-                case StatusEffectType.Burn:
-                    health?.TakeDamage(effect.value);
-                    break;
-                case StatusEffectType.Slow:
-                    // Giảm tốc độ (chưa triển khai)
-                    var sprite = GetComponent<SpriteRenderer>();
-                    if (sprite != null) sprite.color = Color.cyan;
-                    break;
-                case StatusEffectType.Freeze:
-                    // Đóng băng tạm thời (chưa triển khai)
-                    break;
-                case StatusEffectType.Stun:
-                    // Làm choáng (chưa triển khai)
-                    break;
-            }
+                switch (effect.type)
+                {
+                    case StatusEffectType.Burn:
+                    case StatusEffectType.Poison:
+                        health?.TakeDamage(effect.value);
+                        break;
+                }
 
-            yield return new WaitForSeconds(effect.tickRate);
-            timer += effect.tickRate;
+                yield return new WaitForSeconds(effect.tickRate);
+                timer += effect.tickRate;
+            }
+            else
+            {
+                yield return new WaitForSeconds(effect.duration);
+                break;
+            }
         }
 
+        // 🎯 Kết thúc hiệu ứng
         activeEffects.Remove(effect.type);
+
+        if (effect.type == StatusEffectType.Slow)
+        {
+            movement?.ResetSpeed();
+            if (sprite != null) sprite.color = Color.white;
+        }
+
+        if (activeVFX.TryGetValue(effect.type, out var vfx))
+        {
+            Destroy(vfx.vfxObject);
+            StopCoroutine(vfx.timerCoroutine);
+            activeVFX.Remove(effect.type);
+        }
+    }
+
+    // ✅ Gọi từ hiệu ứng (ví dụ IceEffect, BurnEffect)
+    public void TryPlayVFX(StatusEffectType type, GameObject prefab, float duration)
+    {
+        if (activeVFX.TryGetValue(type, out var instance))
+        {
+            if (instance.timerCoroutine != null)
+                StopCoroutine(instance.timerCoroutine);
+
+            instance.timerCoroutine = StartCoroutine(AutoRemoveVFX(type, duration));
+            return;
+        }
+
+        if (prefab != null)
+        {
+            GameObject vfx = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+
+            var newInstance = new VFXInstance
+            {
+                vfxObject = vfx,
+                timerCoroutine = StartCoroutine(AutoRemoveVFX(type, duration))
+            };
+
+            activeVFX[type] = newInstance;
+        }
+    }
+
+    private IEnumerator AutoRemoveVFX(StatusEffectType type, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (activeVFX.TryGetValue(type, out var instance))
+        {
+            Destroy(instance.vfxObject);
+            activeVFX.Remove(type);
+        }
     }
 }

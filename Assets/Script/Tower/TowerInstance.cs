@@ -75,6 +75,8 @@ public class TowerInstance : MonoBehaviour
 
     internal void SellTower()
     {
+        var towerSlot = GetComponentInParent<TowerSlot>();
+        towerSlot.ClearSlot();
         Destroy(gameObject);
     }
 }

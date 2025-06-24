@@ -145,7 +145,7 @@ public class EnemySpawner : MonoBehaviour
             controller.Setup(currentEnemyData);
         }
 
-        EnamyMovement move = enemy.GetComponent<EnamyMovement>();
+        EnemyMovement move = enemy.GetComponent<EnemyMovement>();
         if (move != null)
         {
             move.Setup(currentEnemyData.moveSpeed);

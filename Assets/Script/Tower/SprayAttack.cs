@@ -14,7 +14,7 @@ public class SprayAttack : MonoBehaviour, ITowerAttack
         this.tower = tower;
         targetingSystem = tower.GetComponent<TargetingSystem>();
         targetingSystem.SetRange(tower.data.attackRange);
-        sprayPrefab = Instantiate(tower.data.bulletPrefab, tower.firePoint.position, Quaternion.identity);
+        sprayPrefab = Instantiate(tower.data.bulletPrefab, tower.firePoint.position, Quaternion.identity, tower.transform);
         spray = sprayPrefab.GetComponent<Spray>();
         spray.Stop();
         spray.SetTickRate(tower.data.sprayConfig.tickRate);
@@ -24,10 +24,7 @@ public class SprayAttack : MonoBehaviour, ITowerAttack
     public void Tick(float deltaTime)
     {
         var target = targetingSystem.GetCurrentTarget();
-        if (target != null)
-        {
-            spray.SetTarget(target);
-            spray.Play(target);
-        }
+        spray.SetTarget(target);
+        spray.Play(target);
     }
 }

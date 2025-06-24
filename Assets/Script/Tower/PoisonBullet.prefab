@@ -179,7 +179,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1912532479
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
 --- !u!114 &2748046989127705608
 MonoBehaviour:
@@ -212,6 +212,7 @@ MonoBehaviour:
   tickRate: 1
   areaChance: 0.2
   poisonAreaPrefab: {fileID: 1875991548473235974, guid: 52c3a77db398b8640a18d748df61b4db, type: 3}
+  poisonVFXPrefab: {fileID: 3532032191162094906, guid: 1d7b8b0c1f0201d449e30119f719b1bd, type: 3}
 --- !u!212 &5993739188032164385
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -254,7 +255,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1479343153
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.17254902, g: 0.45882356, b: 0.23529413, a: 1}

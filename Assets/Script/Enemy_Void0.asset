@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: 
   prefab: {fileID: 4733027110107001711, guid: ab2e3408869b9974e92a113c30213d54, type: 3}
-  moveSpeed: 8.73
+  moveSpeed: 1
   health: 100
   damage: 10
   baseEnemies: 8

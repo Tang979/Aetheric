@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnamyMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     private Rigidbody2D rb;
@@ -9,10 +9,12 @@ public class EnamyMovement : MonoBehaviour
     private int partIndex = 0;
 
     private float moveSpeed;
+    private float baseSpeed;
 
     public void Setup(float speed)
     {
-        moveSpeed = speed;
+        baseSpeed = speed;
+        moveSpeed = baseSpeed;
     }
 
     void Start()
@@ -53,6 +55,16 @@ public class EnamyMovement : MonoBehaviour
                 target = LevelManager.main.Path[partIndex];
             }
         }
+    }
+
+    public void ApplySpeedMultiplier(float multiplier)
+    {
+        moveSpeed = baseSpeed * Mathf.Clamp01(1f - multiplier);
+    }
+
+    public void ResetSpeed()
+    {
+        moveSpeed = baseSpeed;
     }
 
     private void FixedUpdate()
