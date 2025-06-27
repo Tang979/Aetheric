@@ -10,6 +10,7 @@ public class TowerDataEditor : Editor
         serializedObject.Update();
         towerData.towerName = EditorGUILayout.TextField("Tower Name", towerData.towerName);
         towerData.isBasicTower = EditorGUILayout.Toggle("Is Basic Tower", towerData.isBasicTower);
+        towerData.rarity = (TowerData.TowerRarity)EditorGUILayout.EnumPopup("Rarity", towerData.rarity);
         towerData.icon = (Sprite)EditorGUILayout.ObjectField("Icon", towerData.icon, typeof(Sprite), false);
         towerData.descriptionSkill = EditorGUILayout.TextField("Description Skill", towerData.descriptionSkill);
         towerData.cost = EditorGUILayout.IntField("Cost", towerData.cost);
@@ -27,7 +28,13 @@ public class TowerDataEditor : Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("sprayConfig"), true);
                 break;
         }
-        serializedObject.ApplyModifiedProperties(); // Thêm dòng này để lưu các thay đổi    
+        serializedObject.ApplyModifiedProperties(); // Thêm dòng này để lưu các thay đổi   
+        if (GUILayout.Button("Save Tower Data"))
+        {
+            EditorUtility.SetDirty(towerData);
+            AssetDatabase.SaveAssets();
+            Debug.Log("Tower data saved successfully.");
+        } 
     }
 
 }

@@ -17,5 +17,5 @@ public class EnemyData : ScriptableObject
     public float enemiesPerSecond = 2f;
     public float timeBetweenWaves = 5f;
     public float difficultyScalingFactor = 0.75f;
-    internal GameObject enemyPrefab;
+    // internal GameObject enemyPrefab;
 }

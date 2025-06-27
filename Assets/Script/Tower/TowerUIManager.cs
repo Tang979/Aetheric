@@ -9,7 +9,7 @@ public class TowerUIManager : MonoBehaviour
     public GameObject panel;
     public TextMeshProUGUI towerName, levelText, skillDesc;
     public Image icon;
-    public TextMeshProUGUI damageText, speedText, rangeText;
+    public TextMeshProUGUI damageText, speedText, rangeText, upgradeCostText, sellValueText;
     public Button upgradeButton, sellButton;
 
     private TowerInstance currentTower;
@@ -28,24 +28,45 @@ public class TowerUIManager : MonoBehaviour
         var data = tower.data;
 
         towerName.text = data.towerName.ToString();
-        levelText.text = "Lv." + (tower.CurrentLevel + 1);
+        levelText.text = "Lv." + (tower.Level);
         icon.sprite = data.icon;
-        damageText.text = $"{data.baseDamage}";
-        rangeText.text = $"{data.attackRange}";
+        damageText.text = $"{tower.CurrentDamage}";
+        rangeText.text = $"{tower.data.attackRange}";
+        switch (data.attackType)
+        {
+            case TowerData.AttackType.Projectile:
+                speedText.text = $"{tower.data.projectileConfig.attackSpeed}";
+                break;
+            case TowerData.AttackType.Spray:
+                speedText.text = $"{tower.data.sprayConfig.tickRate}";
+                break;
+            default:
+                speedText.text = "N/A";
+                break;
+        }
+        sellValueText.text = $"Sell {tower.GetSellValue()}";
+
         // skillDesc.text = GetSkillDescription(data);
         upgradeButton.onClick.RemoveAllListeners();
         sellButton.onClick.RemoveAllListeners();
-        
+
         sellButton.onClick.AddListener(OnSellClicked);
         upgradeButton.onClick.AddListener(OnUpgradeClicked);
-        if (tower.CanUpgrade(tower.CurrentLevel + 1))
+        if (tower.CanUpgrade(tower.Level))
         {
+            upgradeCostText.text = $"Upgrade {currentTower.GetUpgradeCost()}";
             upgradeButton.interactable = true;
+        }
+        else if (tower.isMaxLevel())
+        {
+            upgradeButton.interactable = false;
+            upgradeCostText.text = "Max Level";
         }
         else
         {
             upgradeButton.interactable = false;
         }
+
         // upgradeButton.onClick.AddListener(() => UpdatePanel(tower));
 
         panel.SetActive(true);
@@ -60,8 +81,8 @@ public class TowerUIManager : MonoBehaviour
     public void OnUpgradeClicked()
     {
         Debug.Log("Upgrade button clicked");
-            currentTower?.UpgradeTower();
-            ShowPanel(currentTower); // Refresh lại sau khi nâng
+        currentTower?.Upgrade();
+        ShowPanel(currentTower); // Refresh lại sau khi nâng
     }
 
     public void DisableUpgradeButton()
@@ -71,7 +92,7 @@ public class TowerUIManager : MonoBehaviour
 
     public void OnSellClicked()
     {
-        currentTower?.SellTower(); // nếu có chức năng bán
+        currentTower?.Sell(); // nếu có chức năng bán
         HidePanel();
     }
 

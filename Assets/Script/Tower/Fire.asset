@@ -13,18 +13,16 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   towerName: Fire
-  isSpecialTower: 0
+  rarity: 0
   isBasicTower: 0
   icon: {fileID: 7650368358254182465, guid: 3e5b6d9837967934d9d79f87c699fb73, type: 3}
   descriptionSkill: 
   cost: 0
   attackType: 1
   sprayConfig:
-    attackDuration: 5
-    cooldown: 2
-    tickRate: 0.2
+    tickRate: 0.8
   projectileConfig:
     attackSpeed: 0
-  attackRange: 5
-  baseDamage: 0.3
+  attackRange: 2.9
+  baseDamage: 12
   bulletPrefab: {fileID: 6518515802239445656, guid: 5ea537d1752b3da4ba26ff9884b085cd, type: 3}

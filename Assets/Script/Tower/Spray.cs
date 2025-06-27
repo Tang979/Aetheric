@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -5,6 +6,7 @@ using UnityEngine.VFX;
 public class Spray : MonoBehaviour
 {
     public float range = 3f;
+    private float scaledRange;
     public float coneAngle = 45f;
     private float damage;
     public float tickRate;
@@ -14,22 +16,41 @@ public class Spray : MonoBehaviour
     public LayerMask enemyLayer;
     private Transform currentTarget = null;
 
+    public void SetRange(float range)
+    {
+        this.range = range;
+    }
     public void SetDamage(float damage)
     {
         this.damage = damage;
+    }
+    public float GetDamage()
+    {
+        return damage;
     }
     public void SetTickRate(float rate)
     {
         tickRate = rate;
     }
+    public float GetTickRate()
+    {
+        return tickRate;
+    }
     public void SetTarget(Transform target)
     {
         currentTarget = target;
+        if (target != null)
+        {
+            Vector2 direction = (target.position - transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
     private void Awake()
     {
         sprayVFX = GetComponentInChildren<VisualEffect>();
+        scaledRange = range * transform.lossyScale.x;
     }
 
     private List<Transform> cachedTargets = new List<Transform>();
@@ -53,7 +74,7 @@ public class Spray : MonoBehaviour
 
         if (Time.time - lastCollisionCheckTime >= COLLISION_CHECK_INTERVAL)
         {
-            cachedTargets = GetCollidersInCone(origin, range, coneAngle, enemyLayer);
+            cachedTargets = GetCollidersInCone(origin, scaledRange, coneAngle, enemyLayer);
             lastCollisionCheckTime = Time.time;
         }
 
@@ -63,12 +84,18 @@ public class Spray : MonoBehaviour
             tickTimer = 0f;
             foreach (var target in cachedTargets)
             {
+                if (target == null) continue;
                 EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                 {
                     enemyHealth.TakeDamage(damage);
                 }
+                foreach (var effect in GetComponents<IBulletEffect>())
+                {
+                    effect.ApplyEffect(target);
+                }
             }
+
         }
     }
 
@@ -117,12 +144,12 @@ public class Spray : MonoBehaviour
         int segments = 30;
         float angleStep = (coneAngle * 2f) / segments;
 
-        Vector2 lastPoint = origin + Rotate(direction, -coneAngle) * range;
+        Vector2 lastPoint = origin + Rotate(direction, -coneAngle) * scaledRange;
 
         for (int i = 1; i <= segments; i++)
         {
             float angle = -coneAngle + angleStep * i;
-            Vector2 nextPoint = origin + Rotate(direction, angle) * range;
+            Vector2 nextPoint = origin + Rotate(direction, angle) * scaledRange;
 
             Gizmos.DrawLine(origin, nextPoint);
             Gizmos.DrawLine(lastPoint, nextPoint);

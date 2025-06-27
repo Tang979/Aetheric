@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnamyMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     private Rigidbody2D rb;
@@ -9,10 +9,12 @@ public class EnamyMovement : MonoBehaviour
     private int partIndex = 0;
 
     private float moveSpeed;
+    private float baseSpeed;
 
     public void Setup(float speed)
     {
-        moveSpeed = speed;
+        baseSpeed = speed;
+        moveSpeed = baseSpeed;
     }
 
     void Start()
@@ -45,8 +47,11 @@ public class EnamyMovement : MonoBehaviour
             if (partIndex >= LevelManager.main.Path.Length)
             {
                 // Enemy đã đến đích
+                LevelManager.main.remainingHealth--;
                 UIManager.instance.DecreaseHP(1); // nếu dùng
-                EnemySpawner.onEnemyDestroy.Invoke();
+                EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+                enemyHealth.Die();
+                // EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
                 return;
             }
@@ -55,6 +60,15 @@ public class EnamyMovement : MonoBehaviour
         }
     }
 
+    public void ApplySpeedMultiplier(float multiplier)
+    {
+        moveSpeed = baseSpeed * Mathf.Clamp01(1f - multiplier);
+    }
+
+    public void ResetSpeed()
+    {
+        moveSpeed = baseSpeed;
+    }
 
     private void FixedUpdate()
     {

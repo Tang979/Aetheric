@@ -24,7 +24,7 @@ public class ProjectileAttack : MonoBehaviour, ITowerAttack
             if (target != null)
             {
                 Shoot(target);
-                cooldown = tower.data.projectileConfig.attackSpeed;
+                cooldown = tower.CurrentAttackSpeed;
             }
         }
     }
@@ -32,7 +32,7 @@ public class ProjectileAttack : MonoBehaviour, ITowerAttack
     void Shoot(Transform target)
     {
         GameObject prefabToUse = tower.data.bulletPrefab;
-        float usedDamage = tower.data.baseDamage;
+        float usedDamage = tower.CurrentDamage;
 
         foreach (var mod in GetComponents<ISpecialBullet>())
         {
@@ -41,7 +41,7 @@ public class ProjectileAttack : MonoBehaviour, ITowerAttack
         }
 
         GameObject bullet = BulletPool.Instance.GetBullet(prefabToUse);
-        bullet.transform.position = tower.firePoint.position;
+        bullet.transform.position = tower.transform.position;
         bullet.transform.rotation = Quaternion.identity;
 
         Bullet b = bullet.GetComponent<Bullet>();

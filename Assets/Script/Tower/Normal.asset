@@ -13,18 +13,16 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   towerName: Normal
-  isSpecialTower: 0
+  rarity: 0
   isBasicTower: 1
   icon: {fileID: -8501334089829147504, guid: 5b13b4effe7a866408c9fc40e1a5afbb, type: 3}
   descriptionSkill: 
   cost: 0
   attackType: 0
   sprayConfig:
-    attackDuration: 0
-    cooldown: 0
     tickRate: 0
   projectileConfig:
     attackSpeed: 1
-  attackRange: 5
-  baseDamage: 1
+  attackRange: 2.8
+  baseDamage: 15
   bulletPrefab: {fileID: 7720280996812998114, guid: 47ad860db90e83b44b7f0d43e963e6b0, type: 3}

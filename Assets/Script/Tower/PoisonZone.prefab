@@ -112,8 +112,8 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1912532479
+  m_SortingLayer: 8
   m_SortingOrder: 0
 --- !u!114 &4053509022263855812
 MonoBehaviour:
@@ -134,3 +134,4 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  poisonVFXPrefab: {fileID: 3532032191162094906, guid: 1d7b8b0c1f0201d449e30119f719b1bd, type: 3}
