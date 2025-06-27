@@ -1868,7 +1868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicSource: {fileID: 648091545}
   SFXSource: {fileID: 1819633262}
-  Background: {fileID: 8300000, guid: 923af101400317c42b7c02559768d5db, type: 3}
+  Background: {fileID: 8300000, guid: 72cde4a105c221d44b1aa078255b9c77, type: 3}
 --- !u!4 &830695371
 Transform:
   m_ObjectHideFlags: 0
@@ -7416,7 +7416,7 @@ RectTransform:
   m_Father: {fileID: 2140780041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.6309631, y: 1}
+  m_AnchorMax: {x: 0.649965, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7916,7 +7916,7 @@ MonoBehaviour:
   m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.631
+  m_Value: 0.65
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -7964,8 +7964,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1424528972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6309631, y: 0}
-  m_AnchorMax: {x: 0.6309631, y: 1}
+  m_AnchorMin: {x: 0.649965, y: 0}
+  m_AnchorMax: {x: 0.649965, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

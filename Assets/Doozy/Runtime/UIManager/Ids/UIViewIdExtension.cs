@@ -30,7 +30,9 @@ namespace Doozy.Runtime.UIManager
             MainLevel,
             MainMenu,
             Profile,
-            Setting
+            Setting,
+            Upgrade,
+            UpgradeDefautview
         }    
     }
 }

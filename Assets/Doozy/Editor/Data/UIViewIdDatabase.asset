@@ -24,5 +24,9 @@ MonoBehaviour:
       Name: Profile
     - Category: Demo
       Name: Setting
+    - Category: Demo
+      Name: Upgrade
+    - Category: Demo
+      Name: UpgradeDefautview
     - Category: None
       Name: None

@@ -8,7 +8,7 @@ public class LevelUnlocker : MonoBehaviour
 
     private void Start()
     {
-        // Nếu chưa có dữ liệu unlock, thì mặc định mở khóa màn 1
+        // Nếu chưa có dữ liệu unlock, thì mặc định mở khóa màn 1 3333
         if (!PlayerPrefs.HasKey("UnlockedLevels"))
         {
             PlayerPrefs.SetInt("UnlockedLevels", 1);
