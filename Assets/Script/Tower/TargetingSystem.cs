@@ -4,45 +4,52 @@ public class TargetingSystem : MonoBehaviour
 {
     private float range;
     private Transform currentTarget;
+    private LayerMask enemyLayer;
 
     public void SetRange(float range)
     {
         this.range = range;
     }
+
+    private void Awake() {
+        enemyLayer = LayerMask.GetMask("Enemy");
+        currentTarget = null;
+    }
+
     public Transform GetCurrentTarget()
     {
-        // Nếu chưa có target hoặc target không hợp lệ
-        if (currentTarget == null)
+        if (currentTarget == null || !IsTargetValid(currentTarget))
         {
             currentTarget = FindFirstEnemyInRange();
         }
-        else if (currentTarget != null)
-        {
-            // Kiểm tra xem target còn trong phạm vi hay không
-            float dist = Vector2.Distance(transform.position, currentTarget.position);
-            if (dist > range)
-            {
-                currentTarget = null;
-            }
-        }
+
         return currentTarget;
     }
 
-    Transform FindFirstEnemyInRange()
+    private bool IsTargetValid(Transform target)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (var enemy in enemies)
+        if (target == null) return false;
+
+        float dist = Vector2.Distance(transform.position, target.position);
+        return dist <= range;
+    }
+
+    private Transform FindFirstEnemyInRange()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
+
+        foreach (var hit in hits)
         {
-            float dist = Vector2.Distance(transform.position, enemy.transform.position);
-            if (dist <= range)
+            if (hit.CompareTag("Enemy"))
             {
-                return enemy.transform;
+                return hit.transform;
             }
         }
 
         return null;
     }
-    void OnDrawGizmosSelected()
+
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, range);

@@ -181,7 +181,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1479343153
-  m_SortingLayer: 5
+  m_SortingLayer: 9
   m_SortingOrder: 0
 --- !u!114 &3902921199123069939
 MonoBehaviour:

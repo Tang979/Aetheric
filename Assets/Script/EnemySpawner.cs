@@ -1,181 +1,125 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections;
-using Unity.Mathematics;
-using UnityEngine;
-using UnityEngine.Events;
+using System.Collections.Generic;
+using UnityEngine.UI; // Cho phép liên kết với Button
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private EnemyData[] enemyTypes; 
-
-    [SerializeField] private int playerHP = 20; 
-    [SerializeField] private int playerMoney = 100;
-    [SerializeField] private int totalWaves = 10;
-
-
-    [Header("Events")]
-    public static UnityEvent onEnemyDestroy = new UnityEvent(); 
-    public static UnityEvent OnEnemyReachEnd = new UnityEvent();
-
-
-    private int currentWave = 1;
-
-    private float timeSinceLastSpawn;
-    private int enemiesAlive;
-    private int enemiesLeftToSpawn;
-    private bool isSpawning = false;
-    private EnemyData currentEnemyData;
-
-    private void Awake()
+    [System.Serializable]
+    public class SubWave
     {
-        onEnemyDestroy.AddListener(EnemyDestroyed);
-        OnEnemyReachEnd.AddListener(EnemyReachedEnd);
-
+        public EnemyData enemyData;
+        public int count;
+        public float spawnRate;
+        public float delayBeforeNextSubWave;
     }
 
-    private void EnemyReachedEnd()
+    [System.Serializable]
+    public class Wave
     {
-        playerHP--;
-        UIManager.instance.UpdateHP(playerHP);
-
-        if (playerHP <= 0)
-        {
-            Debug.Log("Game Over - You Lose!");
-            // xử lý kết thúc game tại đây
-        }
+        public List<SubWave> subWaves;
     }
 
+    public List<Wave> waves;
+    public Transform[] spawnPoints;
+    public GameObject nextWaveButton; // UI button
+    private int currentWaveIndex = 0;
+    private int currentSubWaveIndex = 0;
+    private int enemiesAlive = 0;
+
+    public float delayBeforeWaveStarts = 5f;
+    private bool isWaitingForNextWave = false;
+    private bool allEnemiesSpawned = false;
+
+    public delegate void WaveEndHandler();
+    public event WaveEndHandler OnWaveEnd;
 
     private void Start()
     {
-        StartCoroutine(StartWave());
-        UIManager.instance.UpdateMoney(playerMoney);
-        UIManager.instance.UpdateWave(currentWave, totalWaves);
-        UIManager.instance.UpdateHP(playerHP);
-
-        StartCoroutine(StartWave());
+        nextWaveButton.SetActive(true);
+        nextWaveButton.GetComponent<Button>().onClick.AddListener(OnNextWaveButtonClicked);
+        isWaitingForNextWave = true; // Trạng thái đợi ngay từ đầu
     }
 
-    private void Update()
+    IEnumerator SpawnWaveRoutine()
     {
-        if (!isSpawning) return;
-
-        timeSinceLastSpawn += Time.deltaTime;
-
-        if (timeSinceLastSpawn >= (1f / currentEnemyData.enemiesPerSecond) && enemiesLeftToSpawn > 0)
+        while (currentWaveIndex < waves.Count)
         {
-            SpawnEnemy();
-            enemiesLeftToSpawn--;
-            enemiesAlive++;
-            timeSinceLastSpawn = 0f;
+            yield return new WaitForSeconds(delayBeforeWaveStarts);
+            Wave wave = waves[currentWaveIndex];
+
+            allEnemiesSpawned = false;
+
+            for (currentSubWaveIndex = 0; currentSubWaveIndex < wave.subWaves.Count; currentSubWaveIndex++)
+            {
+                SubWave subWave = wave.subWaves[currentSubWaveIndex];
+
+                for (int i = 0; i < subWave.count; i++)
+                {
+                    SpawnEnemy(subWave.enemyData);
+                    yield return new WaitForSeconds(1f / subWave.spawnRate);
+                }
+
+                yield return new WaitForSeconds(subWave.delayBeforeNextSubWave);
+            }
+
+            allEnemiesSpawned = true;
+            LevelManager.main.currentWave++;
+            Debug.Log($"Wave {currentWaveIndex + 1} đã spawn tất cả quái.");
+
+            // Chờ đến khi tất cả quái đã spawn và bị tiêu diệt hết
+            yield return new WaitUntil(() => allEnemiesSpawned && enemiesAlive == 0);
+
+            // Gọi event nếu cần
+            OnWaveEnd?.Invoke();
+
+            // Đợi người chơi ấn nút tiếp tục
+            isWaitingForNextWave = true;
+            nextWaveButton.SetActive(true);
+            yield return new WaitUntil(() => !isWaitingForNextWave);
         }
 
-        if (enemiesAlive == 0 && enemiesLeftToSpawn == 0)
-        {
-            EndWave();
-        }
+        Debug.Log("Tất cả wave đã hoàn thành.");
     }
 
-    private IEnumerator StartWave()
+    void SpawnEnemy(EnemyData data)
     {
-        currentEnemyData = GetEnemyDataForWave(currentWave);
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        GameObject enemy = Instantiate(data.prefab, spawnPoint.position, Quaternion.identity);
+        enemy.GetComponent<EnemyController>().Setup(data);
+        enemy.GetComponent<EnemyMovement>().Setup(data.moveSpeed);
+        enemy.GetComponent<EnemyHealth>().maxHealth = data.health;
+        enemiesAlive++;
 
-        yield return new WaitForSeconds(currentEnemyData.timeBetweenWaves);
-
-        isSpawning = true;
-
-        // Nếu bạn muốn wave 6 là đợt đặc biệt, giữ nguyên. Còn nếu không, bỏ đoạn if:
-        // Ví dụ: nếu bạn muốn wave 6 vẫn theo công thức, thì dùng luôn công thức dưới
-
-        enemiesLeftToSpawn = Mathf.RoundToInt(
-            currentEnemyData.baseEnemies * Mathf.Pow(currentWave, currentEnemyData.difficultyScalingFactor)
-        );
-
-        Debug.Log($"[StartWave] Wave {currentWave} - Spawn: {enemiesLeftToSpawn}");
+        // Khi enemy chết, giảm đếm
+        enemy.GetComponent<EnemyHealth>().OnEnemyDeath += () =>
+        {
+            enemiesAlive--;
+        };
     }
 
-
-    private void EndWave()
+    public void OnNextWaveButtonClicked()
     {
-        isSpawning = false;
-        timeSinceLastSpawn = 0f;
-        currentWave++;
+        nextWaveButton.SetActive(false);
+        isWaitingForNextWave = false;
 
-        UIManager.instance.UpdateWave(currentWave, totalWaves);
-        playerMoney += 10;
-        UIManager.instance.UpdateMoney(playerMoney);
-
-        if (currentWave > totalWaves)
+        // Nếu đây là lần đầu tiên => bắt đầu Coroutine
+        if (currentWaveIndex == 0 && currentSubWaveIndex == 0)
         {
-            Debug.Log("Game Over - You Win!");
-            return;
-        }
-
-        StartCoroutine(StartWave());
-    }
-
-
-    private void SpawnEnemy()
-    {
-        GameObject prefabToSpawn;
-
-        if (currentWave >= 6 && enemyTypes.Length >= 3)
-        {
-            prefabToSpawn = enemyTypes[2].prefab;
-        }
-        else if (currentWave < 3 && enemyTypes.Length >= 1)
-        {
-            prefabToSpawn = enemyTypes[0].prefab;
-        }
-        else if (enemyTypes.Length >= 2)
-        {
-            float chance = (currentWave - 2) * 0.1f; // wave 3 = 10%, wave 4 = 20%, ...
-            chance = Mathf.Clamp01(chance);
-            prefabToSpawn = UnityEngine.Random.value < chance ? enemyTypes[1].prefab : enemyTypes[0].prefab;
+            StartCoroutine(SpawnWaveRoutine());
         }
         else
         {
-            Debug.LogWarning("Không đủ enemyTypes để spawn.");
-            prefabToSpawn = enemyTypes[0].prefab;
+            currentWaveIndex++;
         }
 
-        GameObject enemy = Instantiate(prefabToSpawn, LevelManager.main.StartPoint.position, quaternion.identity);
-
-        EnemyController controller = enemy.GetComponent<EnemyController>();
-        if (controller != null)
-        {
-            controller.Setup(currentEnemyData);
-        }
-
-        EnemyMovement move = enemy.GetComponent<EnemyMovement>();
-        if (move != null)
-        {
-            move.Setup(currentEnemyData.moveSpeed);
-        }
-
+        Debug.Log("Bắt đầu wave kế tiếp.");
     }
 
-    private void EnemyDestroyed()
+    public void ForceNextWave()
     {
-        enemiesAlive--;
-    }
-
-    private EnemyData GetEnemyDataForWave(int wave)
-    {
-        if (wave >= 6 && enemyTypes.Length >= 3)
-            return enemyTypes[2];
-
-        if (wave < 3 && enemyTypes.Length >= 1)
-            return enemyTypes[0];
-
-        if (enemyTypes.Length >= 2)
-        {
-            // vẫn trả enemyTypes[0] làm default cho stats như tốc độ, delay
-            return enemyTypes[0];
-        }
-
-        Debug.LogWarning("EnemyData không đủ!");
-        return enemyTypes[0];
+        StopAllCoroutines();
+        currentWaveIndex++;
+        StartCoroutine(SpawnWaveRoutine());
     }
 }

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5694632682038618571}
   - component: {fileID: -7012409275086871192}
   - component: {fileID: -374465814262519213}
+  - component: {fileID: -6599470271195939185}
+  - component: {fileID: 1209889177632027672}
   m_Layer: 6
   m_Name: Void_v2
   m_TagString: Enemy
@@ -188,3 +190,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8917647, y: 1.157647}
   m_EdgeRadius: 0
+--- !u!114 &-6599470271195939185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935700583914876251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6906ed152a4f949aa3738ca2494841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1209889177632027672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935700583914876251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f84aeb0be577f45995f9228a40189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  coinReward: 20

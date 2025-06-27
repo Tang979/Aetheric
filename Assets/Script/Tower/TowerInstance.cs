@@ -1,34 +1,39 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(TargetingSystem))]
 public class TowerInstance : MonoBehaviour
 {
     public TowerData data;
-    public Transform firePoint;
-
-    private ITowerAttack attackLogic;
-    private int currentLevel = 0;
-    private int maxLevel = 5; // Giới hạn cấp độ tối đa
-
-    private ITowerSkill[] skillModules;
-    public int CurrentLevel => currentLevel;
-
-    public void SetLevel(int level)
+    private int level = 1;
+    public void SetLevel(int newLevel)
     {
-        currentLevel = level;
+        level = newLevel;
     }
+    public int Level => level;
+    private int maxLevel = 5;
 
-    private void Awake()
+    public float CurrentDamage { get; private set; }
+    public float CurrentAttackSpeed { get; private set; }
+    public float CurrentTickRate { get; private set; }
+
+    private int valueTower;
+    private ITowerAttack attackLogic;
+
+    public void SetValueTower(int newValue)
     {
+        valueTower = newValue;
+    }
+    public int ValueTower => valueTower;
+
+    private void Start()
+    {
+        valueTower = UpgradeCostCalculator.GetUpgradeCost(1, data.rarity);
         InitAttackLogic();
+        UpdateStats();
     }
 
     void InitAttackLogic()
     {
-        // Xóa logic cũ nếu có
-        if (attackLogic is MonoBehaviour old) Destroy(old);
-
         switch (data.attackType)
         {
             case TowerData.AttackType.Projectile:
@@ -42,41 +47,81 @@ public class TowerInstance : MonoBehaviour
         attackLogic?.Init(this);
     }
 
-    public void UpgradeTower()
-    {
-        currentLevel++;
-
-        if (currentLevel == 2 && data.isBasicTower)
-        {
-            // Chuyển đổi từ tháp cơ bản sang tháp đặc biệt
-            Transform parent = transform.parent;
-            Vector3 pos = transform.position;
-            Quaternion rot = transform.rotation;
-
-            GameObject newTowerPrefab = GameSessionManager.Instance.GetRandomSpecialTowerPrefab();
-
-            Destroy(this.gameObject);
-            GameObject newTower = Instantiate(newTowerPrefab, pos, rot, parent);
-            newTower.GetComponent<TowerInstance>().SetLevel(currentLevel);
-            TowerSelector selector = GetComponent<TowerSelector>();
-            selector.UpdatePanel(newTower.GetComponent<TowerInstance>());
-        }
-    }
-
-    void Update()
+    private void Update()
     {
         attackLogic?.Tick(Time.deltaTime);
     }
 
-    internal bool CanUpgrade(int level)
+    public void Upgrade()
     {
-        return level < maxLevel && level >= currentLevel;
+        int cost = GetUpgradeCost();
+        if (LevelManager.main.TrySpendGold(cost))
+        {
+            level++;
+            if (level == 3 && data.isBasicTower)
+            {
+                // Chuyển đổi từ tháp cơ bản sang tháp đặc biệt
+                Transform parent = transform.parent;
+                Vector3 pos = transform.position;
+                Quaternion rot = transform.rotation;
+
+                GameObject newTowerPrefab = GameSessionManager.Instance.GetRandomSpecialTowerPrefab();
+
+                GameObject newTower = Instantiate(newTowerPrefab, pos, rot, parent);
+                newTower.GetComponent<TowerInstance>().SetLevel(level);
+                newTower.GetComponent<TowerInstance>().SetValueTower(valueTower += GetUpgradeCost());
+                newTower.GetComponent<TowerInstance>().UpdateStats();
+                Destroy(this.gameObject);
+                TowerSelector selector = GetComponent<TowerSelector>();
+                selector.UpdatePanel(newTower.GetComponent<TowerInstance>());
+                return;
+            }
+            valueTower += cost;
+            UpdateStats();
+        }
     }
 
-    internal void SellTower()
+    private void UpdateStats()
+    {
+        CurrentDamage = data.baseDamage * (1 + 0.2f * (level - 1));
+
+        switch (data.attackType)
+        {
+            case TowerData.AttackType.Projectile:
+                CurrentAttackSpeed = data.projectileConfig.attackSpeed * Mathf.Pow(1.1f, level - 1);
+                break;
+            case TowerData.AttackType.Spray:
+                CurrentTickRate = data.sprayConfig.tickRate * Mathf.Pow(0.95f, level - 1);
+                break;
+        }
+    }
+
+    public int GetUpgradeCost()
+    {
+        var rarity = TowerData.GetStats(data.rarity);
+        return rarity.GetUpgradeCost(level);
+    }
+
+    public int GetSellValue()
+    {
+        return Mathf.RoundToInt(valueTower * 0.7f);
+    }
+
+    public void Sell()
     {
         var towerSlot = GetComponentInParent<TowerSlot>();
+        int refund = GetSellValue();
         towerSlot.ClearSlot();
+        LevelManager.main.AddGold(refund);
         Destroy(gameObject);
+    }
+
+    public bool isMaxLevel()
+    {
+        return level >= maxLevel;
+    }
+    internal bool CanUpgrade(int level)
+    {
+        return level < maxLevel;
     }
 }

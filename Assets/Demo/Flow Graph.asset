@@ -371,8 +371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
   m_Name: Flow Graph
   m_EditorClassIdentifier: 
-  EditorPosition: {x: -508.8, y: 15.2, z: 0}
-  EditorScale: {x: 0.65751624, y: 0.65751624, z: 1}
+  EditorPosition: {x: -994.4, y: -33.59999, z: 0}
+  EditorScale: {x: 1.3225, y: 1.3225, z: 1}
   Id: f59511ad-a808-44e9-889c-5a5f3b07678a
   GraphName: Flow Graph
   GraphDescription: 

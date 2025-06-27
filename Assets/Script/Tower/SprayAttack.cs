@@ -1,6 +1,4 @@
-using Mono.Cecil.Cil;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class SprayAttack : MonoBehaviour, ITowerAttack
 {
@@ -14,11 +12,11 @@ public class SprayAttack : MonoBehaviour, ITowerAttack
         this.tower = tower;
         targetingSystem = tower.GetComponent<TargetingSystem>();
         targetingSystem.SetRange(tower.data.attackRange);
-        sprayPrefab = Instantiate(tower.data.bulletPrefab, tower.firePoint.position, Quaternion.identity, tower.transform);
+        sprayPrefab = Instantiate(tower.data.bulletPrefab, tower.transform.position, Quaternion.identity, tower.transform);
         spray = sprayPrefab.GetComponent<Spray>();
         spray.Stop();
-        spray.SetTickRate(tower.data.sprayConfig.tickRate);
-        spray.SetDamage(tower.data.baseDamage);
+        spray.SetTickRate(tower.CurrentTickRate);
+        spray.SetDamage(tower.CurrentDamage);
     }
 
     public void Tick(float deltaTime)

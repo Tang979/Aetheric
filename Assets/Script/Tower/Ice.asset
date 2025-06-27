@@ -13,18 +13,16 @@ MonoBehaviour:
   m_Name: Ice
   m_EditorClassIdentifier: 
   towerName: Ice
-  isSpecialTower: 0
+  rarity: 0
   isBasicTower: 0
   icon: {fileID: -1496339858, guid: 66544220b973f1c45b64cfc9d826ba52, type: 3}
   descriptionSkill: 
   cost: 0
   attackType: 0
   sprayConfig:
-    attackDuration: 0
-    cooldown: 0
     tickRate: 0
   projectileConfig:
-    attackSpeed: 1
-  attackRange: 5
-  baseDamage: 1
+    attackSpeed: 0.9
+  attackRange: 3.1
+  baseDamage: 11
   bulletPrefab: {fileID: 2192309812738458404, guid: 76355e333e2d12f4982a8ec2515f973a, type: 3}

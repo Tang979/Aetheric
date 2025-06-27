@@ -13,18 +13,16 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   towerName: Poison
-  isSpecialTower: 0
+  rarity: 0
   isBasicTower: 0
   icon: {fileID: -3004102886578502475, guid: a9ab12b0b4c93c342b12943f214fa619, type: 3}
   descriptionSkill: 
   cost: 0
   attackType: 0
   sprayConfig:
-    attackDuration: 0
-    cooldown: 0
     tickRate: 0
   projectileConfig:
-    attackSpeed: 1.5
-  attackRange: 5
-  baseDamage: 1
+    attackSpeed: 0.7
+  attackRange: 3
+  baseDamage: 10
   bulletPrefab: {fileID: 4915179156190182582, guid: 6066219a240fd2942a38470a5cfe4e60, type: 3}

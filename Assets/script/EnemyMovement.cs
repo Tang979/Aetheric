@@ -47,8 +47,11 @@ public class EnemyMovement : MonoBehaviour
             if (partIndex >= LevelManager.main.Path.Length)
             {
                 // Enemy đã đến đích
+                LevelManager.main.remainingHealth--;
                 UIManager.instance.DecreaseHP(1); // nếu dùng
-                EnemySpawner.onEnemyDestroy.Invoke();
+                EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+                enemyHealth.Die();
+                // EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
                 return;
             }

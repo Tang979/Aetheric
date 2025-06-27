@@ -20,11 +20,6 @@ public class UIManager : MonoBehaviour
     private bool isGameOver = false;
     private bool isPaused;
 
-    [Header("Special Tower UI")]
-    public GameObject specialTowerPanel;
-    public Transform buttonContainer; // nơi chứa các nút chọn
-    public GameObject buttonPrefab;
-
     private TowerInstance currentTower;
 
     private void Awake()
@@ -42,9 +37,9 @@ public class UIManager : MonoBehaviour
         UpdateHP(currentHP);
     }
 
-    public void UpdateMoney(int amount)
+    public void UpdateMoney()
     {
-        moneyText.text = $"${amount}";
+        moneyText.text = $"${LevelManager.main.currentGold}";
     }
 
     public void UpdateWave(int current, int total)
