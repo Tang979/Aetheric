@@ -27,7 +27,8 @@ public class TowerInstance : MonoBehaviour
 
     private void Start()
     {
-        valueTower = UpgradeCostCalculator.GetUpgradeCost(1, data.rarity);
+        if (valueTower <= 0)
+        valueTower = UpgradeCostCalculator.GetUpgradeCost(level, data.rarity);
         InitAttackLogic();
         UpdateStats();
     }
@@ -69,14 +70,16 @@ public class TowerInstance : MonoBehaviour
 
                 GameObject newTower = Instantiate(newTowerPrefab, pos, rot, parent);
                 newTower.GetComponent<TowerInstance>().SetLevel(level);
-                newTower.GetComponent<TowerInstance>().SetValueTower(valueTower += GetUpgradeCost());
+                valueTower += GetUpgradeCost();
+                newTower.GetComponent<TowerInstance>().SetValueTower(valueTower);
+                Debug.Log("Value Tower after upgrade: " + valueTower);
                 newTower.GetComponent<TowerInstance>().UpdateStats();
                 Destroy(this.gameObject);
                 TowerSelector selector = GetComponent<TowerSelector>();
                 selector.UpdatePanel(newTower.GetComponent<TowerInstance>());
                 return;
             }
-            valueTower += cost;
+            valueTower += GetUpgradeCost();
             UpdateStats();
         }
     }

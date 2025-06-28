@@ -13,7 +13,6 @@ public class TowerDataEditor : Editor
         towerData.rarity = (TowerData.TowerRarity)EditorGUILayout.EnumPopup("Rarity", towerData.rarity);
         towerData.icon = (Sprite)EditorGUILayout.ObjectField("Icon", towerData.icon, typeof(Sprite), false);
         towerData.descriptionSkill = EditorGUILayout.TextField("Description Skill", towerData.descriptionSkill);
-        towerData.cost = EditorGUILayout.IntField("Cost", towerData.cost);
         towerData.attackType = (TowerData.AttackType)EditorGUILayout.EnumPopup("Attack Type", towerData.attackType);
         towerData.attackRange = EditorGUILayout.FloatField("Attack Range", towerData.attackRange);
         towerData.baseDamage = EditorGUILayout.FloatField("Base Damage", towerData.baseDamage);

@@ -3,6 +3,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager main;
+    private RewardData rewardData;
 
     public int levelId;
     public int currentWave;
@@ -31,11 +32,11 @@ public class LevelManager : MonoBehaviour
         else
         {
             currentWave = 1;
-            currentGold = 100;
+            currentGold = 500;
             remainingHealth = 20;
             UIManager.instance.UpdateMoney();
             UIManager.instance.UpdateHP(remainingHealth);
-            UIManager.instance.UpdateWave(currentWave, 10);
+            UIManager.instance.UpdateWave(currentWave, EnemySpawner.main.GetTotalWaves());
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -104,5 +105,10 @@ public class UIManager : MonoBehaviour
 
         // TODO: Nếu có màn hình Game Over, kích hoạt nó ở đây
         // Ví dụ: gameOverPanel.SetActive(true);
+    }
+
+    internal void UpdateWave(int currentWave, object value)
+    {
+        throw new NotImplementedException();
     }
 }

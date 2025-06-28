@@ -23,7 +23,6 @@ public class EnemySpawner : MonoBehaviour
     public List<Wave> waves;
     public Transform[] spawnPoints;
     public GameObject nextWaveButton; // UI button
-    private int currentWaveIndex = 0;
     private int currentSubWaveIndex = 0;
     private int enemiesAlive = 0;
 
@@ -31,11 +30,14 @@ public class EnemySpawner : MonoBehaviour
     private bool isWaitingForNextWave = false;
     private bool allEnemiesSpawned = false;
 
+    public static EnemySpawner main;
+
     public delegate void WaveEndHandler();
     public event WaveEndHandler OnWaveEnd;
 
-    private void Start()
+    private void Awake()
     {
+        main = this;
         nextWaveButton.SetActive(true);
         nextWaveButton.GetComponent<Button>().onClick.AddListener(OnNextWaveButtonClicked);
         isWaitingForNextWave = true; // Trạng thái đợi ngay từ đầu
@@ -43,10 +45,11 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWaveRoutine()
     {
-        while (currentWaveIndex < waves.Count)
+        var CurrentWave = LevelManager.main.currentWave - 1;// Giảm 1 vì currentWave bắt đầu từ 1 nhưng danh sách waves bắt đầu từ 0
+        while (CurrentWave < waves.Count)
         {
             yield return new WaitForSeconds(delayBeforeWaveStarts);
-            Wave wave = waves[currentWaveIndex];
+            Wave wave = waves[CurrentWave];
 
             allEnemiesSpawned = false;
 
@@ -65,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
 
             allEnemiesSpawned = true;
             LevelManager.main.currentWave++;
-            Debug.Log($"Wave {currentWaveIndex + 1} đã spawn tất cả quái.");
+            Debug.Log($"Wave {CurrentWave} đã spawn tất cả quái.");
 
             // Chờ đến khi tất cả quái đã spawn và bị tiêu diệt hết
             yield return new WaitUntil(() => allEnemiesSpawned && enemiesAlive == 0);
@@ -104,13 +107,14 @@ public class EnemySpawner : MonoBehaviour
         isWaitingForNextWave = false;
 
         // Nếu đây là lần đầu tiên => bắt đầu Coroutine
-        if (currentWaveIndex == 0 && currentSubWaveIndex == 0)
+        if (LevelManager.main.currentWave == 1 && currentSubWaveIndex == 0)
         {
             StartCoroutine(SpawnWaveRoutine());
         }
         else
         {
-            currentWaveIndex++;
+            LevelManager.main.currentWave++;
+            UIManager.instance.UpdateWave(LevelManager.main.currentWave, waves.Count);
         }
 
         Debug.Log("Bắt đầu wave kế tiếp.");
@@ -119,7 +123,11 @@ public class EnemySpawner : MonoBehaviour
     public void ForceNextWave()
     {
         StopAllCoroutines();
-        currentWaveIndex++;
         StartCoroutine(SpawnWaveRoutine());
+    }
+
+    internal int GetTotalWaves()
+    {
+        return waves.Count;
     }
 }

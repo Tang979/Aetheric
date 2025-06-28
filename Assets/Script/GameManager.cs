@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
                 coin = 0,
                 gem = 0,
                 unlockedLevels = new int[] { 1 },
-                unlockedTowers = new string[] { "Basic" },
+                unlockedTowers = new string[] { "Basic","Fire","Ice","Poison","Rock" },
                 levelProgresses = new List<LevelProgress>()
             };
 
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Gem: " + PlayerData.gem);
     }
 
-    public void EnsureLevelProgress(int levelId)
+    public void EnsureLevelProgress(int levelId)//
     {
         if (!PlayerData.levelProgresses.Exists(p => p.levelId == levelId))
         {
@@ -75,9 +75,9 @@ public class GameManager : MonoBehaviour
             {
                 levelId = levelId,
                 isInProgress = false,
-                currentWave = 0,
-                remainingHealth = 100,
-                currentGold = 40
+                currentWave = 1,
+                remainingHealth = 20,
+                currentGold = 100
             });
             SavePlayerData();
         }

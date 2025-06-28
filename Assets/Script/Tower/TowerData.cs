@@ -9,7 +9,6 @@ public class TowerData : ScriptableObject
     public bool isBasicTower = false;
     public Sprite icon;
     public string descriptionSkill;
-    public int cost;
     public AttackType attackType;
     [Header("Cấu hình tấn công")]
     public SprayConfig sprayConfig;
@@ -23,8 +22,7 @@ public class TowerData : ScriptableObject
     public enum AttackType
     {
         Projectile,
-        Spray,
-        Zone
+        Spray
     }
 
     public enum TowerRarity
