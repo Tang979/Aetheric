@@ -17,7 +17,7 @@ MonoBehaviour:
     - Category: Demo
       Name: Back
     - Category: Demo
-      Name: Exit
+      Name: Collection
     - Category: Demo
       Name: Level
     - Category: Demo
@@ -30,5 +30,7 @@ MonoBehaviour:
       Name: Quit
     - Category: Demo
       Name: Setting
+    - Category: Demo
+      Name: Upgrade
     - Category: None
       Name: None
