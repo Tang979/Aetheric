@@ -11,9 +11,11 @@ public class IceEffect : MonoBehaviour, IBulletEffect
     public void ApplyEffect(Transform target)
     {
         var status = target.GetComponent<EnemyStatus>();
+        var spray = GetComponent<Spray>();
         if (status != null)
         {
-            status.ApplyEffect(StatusEffectType.Slow, duration, 0f, slowMultiplier);
+            var tickRate = spray.GetTickRate();
+            status.ApplyEffect(StatusEffectType.Slow, duration, tickRate, slowMultiplier);
             status.TryPlayVFX(StatusEffectType.Slow, iceVFXPrefab, duration);
         }
     }

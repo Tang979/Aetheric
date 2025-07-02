@@ -214,5 +214,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f84aeb0be577f45995f9228a40189d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  coinReward: 20
+  coinReward: 9

@@ -50,7 +50,6 @@ public class Spray : MonoBehaviour
     private void Awake()
     {
         sprayVFX = GetComponentInChildren<VisualEffect>();
-        // scaledRange = range * transform.lossyScale.x;
     }
 
     private List<Transform> cachedTargets = new List<Transform>();

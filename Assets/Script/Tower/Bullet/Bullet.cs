@@ -23,6 +23,11 @@ public class Bullet : MonoBehaviour
         damage = _damage;
     }
 
+    public float GetDamage()
+    {
+        return damage;
+    }
+
     void Update()
     {
         if (target == null || !target.gameObject.activeInHierarchy)

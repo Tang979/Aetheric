@@ -91,10 +91,10 @@ public class TowerInstance : MonoBehaviour
         switch (data.attackType)
         {
             case TowerData.AttackType.Projectile:
-                CurrentAttackSpeed = data.projectileConfig.attackSpeed * Mathf.Pow(1.1f, level - 1);
+                CurrentAttackSpeed = data.attackSpeed * Mathf.Pow(1.1f, level - 1);
                 break;
             case TowerData.AttackType.Spray:
-                CurrentTickRate = data.sprayConfig.tickRate * Mathf.Pow(0.95f, level - 1);
+                CurrentTickRate = data.attackSpeed * Mathf.Pow(0.95f, level - 1);
                 break;
         }
     }

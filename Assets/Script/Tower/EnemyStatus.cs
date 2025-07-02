@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum StatusEffectType
 {
@@ -38,7 +39,7 @@ public class EnemyStatus : MonoBehaviour
     }
     private Dictionary<StatusEffectType, VFXInstance> activeVFX = new();
 
-    // ❗Ràng buộc loại trừ giữa các hiệu ứng
+
     private static readonly Dictionary<StatusEffectType, StatusEffectType[]> conflictingEffects = new()
     {
         { StatusEffectType.Burn, new[] { StatusEffectType.Slow, StatusEffectType.Freeze } },
@@ -48,7 +49,6 @@ public class EnemyStatus : MonoBehaviour
 
     public void ApplyEffect(StatusEffectType type, float duration, float tickRate, float value)
     {
-        // 🔸 Xử lý mâu thuẫn với hiệu ứng đang tồn tại
         if (conflictingEffects.TryGetValue(type, out var toRemoveList))
         {
             foreach (var conflict in toRemoveList)
@@ -76,7 +76,6 @@ public class EnemyStatus : MonoBehaviour
             }
         }
 
-        // 🔸 Ghi đè nếu đã có
         if (activeEffects.TryGetValue(type, out var existing))
         {
             StopCoroutine(existing.coroutine);
@@ -94,7 +93,6 @@ public class EnemyStatus : MonoBehaviour
         var movement = GetComponent<EnemyMovement>();
         var sprite = GetComponent<SpriteRenderer>();
 
-        // 🎯 Setup trước khi vòng lặp
         switch (effect.type)
         {
             case StatusEffectType.Slow:
@@ -125,7 +123,6 @@ public class EnemyStatus : MonoBehaviour
             }
         }
 
-        // 🎯 Kết thúc hiệu ứng
         activeEffects.Remove(effect.type);
 
         if (effect.type == StatusEffectType.Slow)
@@ -142,7 +139,6 @@ public class EnemyStatus : MonoBehaviour
         }
     }
 
-    // ✅ Gọi từ hiệu ứng (ví dụ IceEffect, BurnEffect)
     public void TryPlayVFX(StatusEffectType type, GameObject prefab, float duration)
     {
         if (activeVFX.TryGetValue(type, out var instance))

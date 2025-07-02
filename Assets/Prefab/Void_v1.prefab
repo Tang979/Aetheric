@@ -156,8 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f84aeb0be577f45995f9228a40189d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  coinReward: 15
+  coinReward: 7
 --- !u!61 &-1155151099484066944
 BoxCollider2D:
   m_ObjectHideFlags: 0
