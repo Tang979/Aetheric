@@ -21,6 +21,8 @@ MonoBehaviour:
     - Category: Demo
       Name: Level
     - Category: Demo
+      Name: Login
+    - Category: Demo
       Name: MainMenu
     - Category: Demo
       Name: Play
@@ -28,6 +30,8 @@ MonoBehaviour:
       Name: Profile
     - Category: Demo
       Name: Quit
+    - Category: Demo
+      Name: Registor
     - Category: Demo
       Name: Setting
     - Category: Demo
