@@ -15,6 +15,7 @@ public class SprayAttack : MonoBehaviour, ITowerAttack
         sprayPrefab = Instantiate(tower.data.bulletPrefab, tower.transform.position, Quaternion.identity, tower.transform);
         spray = sprayPrefab.GetComponent<Spray>();
         spray.Stop();
+        spray.SetRange(tower.data.attackRange);
         spray.SetTickRate(tower.CurrentTickRate);
         spray.SetDamage(tower.CurrentDamage);
     }

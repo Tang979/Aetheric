@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666f0f598e8700a4fbf831a14dbfd540, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  towerName: Poison
+  rarity: 0
+  isBasicTower: 0
+  isComingSoon: 0
+  icon: {fileID: 1541567267, guid: a9ab12b0b4c93c342b12943f214fa619, type: 3}
+  attackSpeed: 0.8
+  descriptionSkill: "\u0110\u1EA7u \u0111\u1ED9c m\u1EE5c ti\xEAu g\xE2y s\xE1t th\u01B0\u01A1ng
+    d\u1EA7n theo th\u1EDDi gian v\xE0 c\xF3 t\u1EC9 l\u1EC7 t\u1EA1o v\xF9ng \u0111\u1ED9c
+    l\u1EDBn g\xE2y \u1EA3nh h\u01B0\u1EDFng di\u1EC7n r\u1ED9ng."
+  attackType: 0
+  attackRange: 3
+  baseDamage: 8.5
+  bulletPrefab: {fileID: 4915179156190182582, guid: 6066219a240fd2942a38470a5cfe4e60, type: 3}

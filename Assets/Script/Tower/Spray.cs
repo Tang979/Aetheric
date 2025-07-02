@@ -50,7 +50,6 @@ public class Spray : MonoBehaviour
     private void Awake()
     {
         sprayVFX = GetComponentInChildren<VisualEffect>();
-        scaledRange = range * transform.lossyScale.x;
     }
 
     private List<Transform> cachedTargets = new List<Transform>();
@@ -74,7 +73,7 @@ public class Spray : MonoBehaviour
 
         if (Time.time - lastCollisionCheckTime >= COLLISION_CHECK_INTERVAL)
         {
-            cachedTargets = GetCollidersInCone(origin, scaledRange, coneAngle, enemyLayer);
+            cachedTargets = GetCollidersInCone(origin, range, coneAngle, enemyLayer);
             lastCollisionCheckTime = Time.time;
         }
 
@@ -144,12 +143,12 @@ public class Spray : MonoBehaviour
         int segments = 30;
         float angleStep = (coneAngle * 2f) / segments;
 
-        Vector2 lastPoint = origin + Rotate(direction, -coneAngle) * scaledRange;
+        Vector2 lastPoint = origin + Rotate(direction, -coneAngle) * range;
 
         for (int i = 1; i <= segments; i++)
         {
             float angle = -coneAngle + angleStep * i;
-            Vector2 nextPoint = origin + Rotate(direction, angle) * scaledRange;
+            Vector2 nextPoint = origin + Rotate(direction, angle) * range;
 
             Gizmos.DrawLine(origin, nextPoint);
             Gizmos.DrawLine(lastPoint, nextPoint);

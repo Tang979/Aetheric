@@ -24,19 +24,39 @@ public class LevelManager : MonoBehaviour
 
         if (progress != null)
         {
-            currentWave = progress.currentWave;
-            currentGold = progress.currentGold;
-            remainingHealth = progress.remainingHealth;
+            if (progress.isCompleted)
+            {
+                // Nếu level đã hoàn thành, reset lại thông tin
+                ResetLevel();
+            }
+            else
+            {
+                // Nếu level đang chơi, load thông tin hiện tại
+                currentWave = progress.currentWave;
+                currentGold = progress.currentGold;
+                remainingHealth = progress.remainingHealth;
+                // Cập nhật UI
+                UILevelManager.instance.UpdateMoney();
+                UILevelManager.instance.UpdateHP(remainingHealth);
+                UILevelManager.instance.UpdateWave(currentWave, EnemySpawner.main.waves.Count);
+            }
         }
         else
         {
-            currentWave = 1;
-            currentGold = 100;
-            remainingHealth = 20;
-            UIManager.instance.UpdateMoney();
-            UIManager.instance.UpdateHP(remainingHealth);
-            UIManager.instance.UpdateWave(currentWave, 10);
+            ResetLevel();
         }
+    }
+
+    public void ResetLevel()
+    {
+        currentWave = 1;
+        currentGold = 100;
+        remainingHealth = 20;
+
+        // Reset UI
+        UILevelManager.instance.UpdateMoney();
+        UILevelManager.instance.UpdateHP(remainingHealth);
+        UILevelManager.instance.UpdateWave(currentWave, EnemySpawner.main.waves.Count);
     }
 
     public void SaveProgress()
@@ -58,12 +78,33 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.SavePlayerData();
     }
 
+    public void CompleteLevel()
+    {
+        var data = GameManager.Instance.PlayerData;
+        var progress = data.levelProgresses.Find(p => p.levelId == levelId);
+
+        if (progress == null)
+        {
+            progress = new LevelProgress { levelId = levelId };
+            data.levelProgresses.Add(progress);
+        }
+
+        progress.isInProgress = false;
+        progress.isCompleted = true;
+        progress.currentWave = currentWave;
+        progress.remainingHealth = remainingHealth;
+        progress.currentGold = currentGold;
+        // Thêm phần thưởng nếu có
+        var rewardedTowers = RewardManager.Instance.GrantLevelRewards(levelId);
+        UILevelManager.instance.ShowLevelCompleteUI(rewardedTowers);
+    }
+
     public bool TrySpendGold(int amount)
     {
         if (currentGold >= amount)
         {
             currentGold -= amount;
-            UIManager.instance.UpdateMoney();
+            UILevelManager.instance.UpdateMoney();
             return true;
         }
         return false;
@@ -72,6 +113,6 @@ public class LevelManager : MonoBehaviour
     public void AddGold(int amount)
     {
         currentGold += amount;
-        UIManager.instance.UpdateMoney();
+        UILevelManager.instance.UpdateMoney();
     }
-} 
+}

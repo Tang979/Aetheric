@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public float maxHealth = 5;
+    private float maxHealth = 5;
+
     private float currentHealth;
     [SerializeField] private int coinReward = 10;
 
+    private bool isDead = false;
     public Action OnEnemyDeath;
 
     void Start()
@@ -15,6 +17,11 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    public void SetMaxHealth(float health)
+    {
+        maxHealth = health;
+        currentHealth = maxHealth; // Reset current health to max when setting a new max
+    }
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
@@ -26,12 +33,15 @@ public class EnemyHealth : MonoBehaviour
 
     public void Die()
     {
+        if (isDead) return; // Bảo vệ không cho chạy lần 2
+        isDead = true;
+        
         var levelManager = LevelManager.main;
         if (levelManager != null)
         {
             levelManager.currentGold += coinReward;
-            UIManager.instance.UpdateMoney();
-        }        
+            UILevelManager.instance.UpdateMoney();
+        }
         OnEnemyDeath?.Invoke();
         Destroy(gameObject);
     }

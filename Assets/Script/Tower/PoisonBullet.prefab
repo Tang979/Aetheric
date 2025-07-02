@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 4
   damagePerTick: 0.5
-  tickRate: 1
+  tickRate: 0.4
   areaChance: 0.2
   poisonAreaPrefab: {fileID: 1875991548473235974, guid: 52c3a77db398b8640a18d748df61b4db, type: 3}
   poisonVFXPrefab: {fileID: 3532032191162094906, guid: 1d7b8b0c1f0201d449e30119f719b1bd, type: 3}

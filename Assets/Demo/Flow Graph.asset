@@ -1,4 +1,4 @@
-%YAML 1.1
+F%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &-8952779073448877658
 MonoBehaviour:
@@ -590,8 +590,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
   m_Name: Flow Graph
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   EditorPosition: {x: 11.2, y: 99.2, z: 0}
   EditorScale: {x: 0.57175326, y: 0.57175326, z: 1}
+=======
+  EditorPosition: {x: -625.6, y: -391.2, z: 0}
+  EditorScale: {x: 0.7561437, y: 0.7561437, z: 1}
+>>>>>>> origin/Khoa
   Id: f59511ad-a808-44e9-889c-5a5f3b07678a
   GraphName: Flow Graph
   GraphDescription: 
@@ -756,7 +761,11 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 0
   ClearGraphHistory: 0
+<<<<<<< HEAD
   Position: {x: 1608.8162, y: 718.4}
+=======
+  Position: {x: 1317.7196, y: 726.39996}
+>>>>>>> origin/Khoa
   OnEnterShowViews:
   - Id:
       Category: Demo
@@ -830,7 +839,11 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 0
   ClearGraphHistory: 0
+<<<<<<< HEAD
   Position: {x: 981.5999, y: -153.6}
+=======
+  Position: {x: 566.4, y: -133.23706}
+>>>>>>> origin/Khoa
   OnEnterShowViews:
   - Id:
       Category: Demo

@@ -7,7 +7,7 @@ public class TowerUIManager : MonoBehaviour
 {
     [Header("UI Panel Chính")]
     public GameObject panel;
-    public TextMeshProUGUI towerName, levelText, skillDesc;
+    public TextMeshProUGUI towerName, skillDesc;
     public Image icon;
     public TextMeshProUGUI damageText, speedText, rangeText, upgradeCostText, sellValueText;
     public Button upgradeButton, sellButton;
@@ -27,23 +27,13 @@ public class TowerUIManager : MonoBehaviour
         currentTower = tower;
         var data = tower.data;
 
-        towerName.text = data.towerName.ToString();
-        levelText.text = "Lv." + (tower.Level);
+        towerName.text = $"{data.towerName} - Lv.{tower.Level}";
         icon.sprite = data.icon;
         damageText.text = $"{tower.CurrentDamage}";
         rangeText.text = $"{tower.data.attackRange}";
-        switch (data.attackType)
-        {
-            case TowerData.AttackType.Projectile:
-                speedText.text = $"{tower.data.projectileConfig.attackSpeed}";
-                break;
-            case TowerData.AttackType.Spray:
-                speedText.text = $"{tower.data.sprayConfig.tickRate}";
-                break;
-            default:
-                speedText.text = "N/A";
-                break;
-        }
+        skillDesc.text = GetSkillDescription(data);
+        speedText.text = $"{tower.data.attackSpeed}";
+        
         sellValueText.text = $"Sell {tower.GetSellValue()}";
 
         // skillDesc.text = GetSkillDescription(data);
@@ -96,10 +86,10 @@ public class TowerUIManager : MonoBehaviour
         HidePanel();
     }
 
-    // string GetSkillDescription(TowerData data)
-    // {
-    //     return !string.IsNullOrEmpty(data.descriptionSkill)
-    //         ? data.descriptionSkill
-    //         : "No skill description available.";
-    // }
+    string GetSkillDescription(TowerData data)
+    {
+        return !string.IsNullOrEmpty(data.descriptionSkill)
+            ? data.descriptionSkill
+            : "No skill description available.";
+    }
 }

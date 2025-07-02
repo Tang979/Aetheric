@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fb7efbd5961414392417fb4ad2f0b5, type: 3}
+  m_Name: LevelRewardData
+  m_EditorClassIdentifier: 
+  levelId: 1
+  cardRewards:
+  - rewardType: 0
+    towerData: {fileID: 11400000, guid: 10ec4353406aaad4e8e67fa93584aee4, type: 2}
+    rarity: 0
+    quantity: 5
+    maxRandomTowerTypes: 3
+  - rewardType: 1
+    towerData: {fileID: 11400000, guid: 10ec4353406aaad4e8e67fa93584aee4, type: 2}
+    rarity: 0
+    quantity: 15
+    maxRandomTowerTypes: 3

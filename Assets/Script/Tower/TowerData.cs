@@ -7,13 +7,11 @@ public class TowerData : ScriptableObject
     public string towerName;
     public TowerRarity rarity;
     public bool isBasicTower = false;
+    public bool isComingSoon = false;
     public Sprite icon;
+    public float attackSpeed;
     public string descriptionSkill;
-    public int cost;
     public AttackType attackType;
-    [Header("Cấu hình tấn công")]
-    public SprayConfig sprayConfig;
-    public ProjectileConfig projectileConfig;
     public float attackRange;
     public float baseDamage;
     public GameObject bulletPrefab;
@@ -23,8 +21,7 @@ public class TowerData : ScriptableObject
     public enum AttackType
     {
         Projectile,
-        Spray,
-        Zone
+        Spray
     }
 
     public enum TowerRarity
@@ -54,7 +51,7 @@ public class TowerData : ScriptableObject
         switch (rarity)
         {
             case TowerRarity.Common:
-                return new TowerStats { rarity = rarity, upgradeFactor = 1.2f, exponent = 1.4f };
+                return new TowerStats { rarity = rarity, upgradeFactor = 1.25f, exponent = 1.4f };
             case TowerRarity.Rare:
                 return new TowerStats { rarity = rarity, upgradeFactor = 1.3f, exponent = 1.6f };
             case TowerRarity.Epic:
@@ -65,14 +62,4 @@ public class TowerData : ScriptableObject
                 return new TowerStats();
         }
     }
-}
-[System.Serializable]
-public class SprayConfig
-{
-    public float tickRate;
-}
-[System.Serializable]
-public class ProjectileConfig
-{
-    public float attackSpeed;
 }

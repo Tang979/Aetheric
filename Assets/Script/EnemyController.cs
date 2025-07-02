@@ -10,7 +10,6 @@ public class EnemyController : MonoBehaviour
     {
         moveSpeed = data.moveSpeed;
         health = data.health;
-        damage = data.damage;
     }
 
     void Update()

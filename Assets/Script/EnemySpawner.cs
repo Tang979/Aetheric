@@ -23,7 +23,6 @@ public class EnemySpawner : MonoBehaviour
     public List<Wave> waves;
     public Transform[] spawnPoints;
     public GameObject nextWaveButton; // UI button
-    private int currentWaveIndex = 0;
     private int currentSubWaveIndex = 0;
     private int enemiesAlive = 0;
 
@@ -31,11 +30,18 @@ public class EnemySpawner : MonoBehaviour
     private bool isWaitingForNextWave = false;
     private bool allEnemiesSpawned = false;
 
+    [Header("Cấu hình tăng theo wave")]// Tăng sức mạnh của quái theo từng wave
+    public float healthGrowthPerWave = 0.15f;
+    public float speedGrowthPerWave = 0.05f;
+
+    public static EnemySpawner main;
+
     public delegate void WaveEndHandler();
     public event WaveEndHandler OnWaveEnd;
 
-    private void Start()
+    private void Awake()
     {
+        main = this;
         nextWaveButton.SetActive(true);
         nextWaveButton.GetComponent<Button>().onClick.AddListener(OnNextWaveButtonClicked);
         isWaitingForNextWave = true; // Trạng thái đợi ngay từ đầu
@@ -43,10 +49,11 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWaveRoutine()
     {
-        while (currentWaveIndex < waves.Count)
+        var CurrentWave = LevelManager.main.currentWave - 1;// Giảm 1 vì currentWave bắt đầu từ 1 nhưng danh sách waves bắt đầu từ 0
+        while (CurrentWave < waves.Count)
         {
             yield return new WaitForSeconds(delayBeforeWaveStarts);
-            Wave wave = waves[currentWaveIndex];
+            Wave wave = waves[CurrentWave];
 
             allEnemiesSpawned = false;
 
@@ -56,39 +63,42 @@ public class EnemySpawner : MonoBehaviour
 
                 for (int i = 0; i < subWave.count; i++)
                 {
-                    SpawnEnemy(subWave.enemyData);
-                    yield return new WaitForSeconds(1f / subWave.spawnRate);
+                    SpawnEnemy(subWave.enemyData, CurrentWave);
+                    yield return new WaitForSeconds(subWave.spawnRate);
                 }
 
                 yield return new WaitForSeconds(subWave.delayBeforeNextSubWave);
             }
 
             allEnemiesSpawned = true;
-            LevelManager.main.currentWave++;
-            Debug.Log($"Wave {currentWaveIndex + 1} đã spawn tất cả quái.");
+            Debug.Log($"Wave {CurrentWave} đã spawn tất cả quái.");
 
             // Chờ đến khi tất cả quái đã spawn và bị tiêu diệt hết
             yield return new WaitUntil(() => allEnemiesSpawned && enemiesAlive == 0);
 
             // Gọi event nếu cần
             OnWaveEnd?.Invoke();
-
-            // Đợi người chơi ấn nút tiếp tục
-            isWaitingForNextWave = true;
-            nextWaveButton.SetActive(true);
-            yield return new WaitUntil(() => !isWaitingForNextWave);
+            LevelManager.main.currentWave++;
+            UILevelManager.instance.UpdateWave(LevelManager.main.currentWave, waves.Count);
+            if(CurrentWave != waves.Count)
+            CurrentWave++;
         }
 
         Debug.Log("Tất cả wave đã hoàn thành.");
+        LevelManager.main.CompleteLevel();
+        LevelManager.main.SaveProgress();
+        GameManager.Instance.SavePlayerData();
     }
 
-    void SpawnEnemy(EnemyData data)
+    void SpawnEnemy(EnemyData data, int currentWave)
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
         GameObject enemy = Instantiate(data.prefab, spawnPoint.position, Quaternion.identity);
-        enemy.GetComponent<EnemyController>().Setup(data);
-        enemy.GetComponent<EnemyMovement>().Setup(data.moveSpeed);
-        enemy.GetComponent<EnemyHealth>().maxHealth = data.health;
+        // enemy.GetComponent<EnemyController>().Setup(data);
+        float healthMultiplier = 1 + currentWave * healthGrowthPerWave;
+        float speedMultiplier = 1 + currentWave * speedGrowthPerWave;
+        enemy.GetComponent<EnemyMovement>().Setup(data.moveSpeed * speedMultiplier);
+        enemy.GetComponent<EnemyHealth>().SetMaxHealth(healthMultiplier * data.health);
         enemiesAlive++;
 
         // Khi enemy chết, giảm đếm
@@ -102,24 +112,15 @@ public class EnemySpawner : MonoBehaviour
     {
         nextWaveButton.SetActive(false);
         isWaitingForNextWave = false;
-
-        // Nếu đây là lần đầu tiên => bắt đầu Coroutine
-        if (currentWaveIndex == 0 && currentSubWaveIndex == 0)
-        {
-            StartCoroutine(SpawnWaveRoutine());
-        }
-        else
-        {
-            currentWaveIndex++;
-        }
+        StartCoroutine(SpawnWaveRoutine());
 
         Debug.Log("Bắt đầu wave kế tiếp.");
+
     }
 
     public void ForceNextWave()
     {
         StopAllCoroutines();
-        currentWaveIndex++;
         StartCoroutine(SpawnWaveRoutine());
     }
 }

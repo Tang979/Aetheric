@@ -35,7 +35,7 @@ public class TowerSpawnManager : MonoBehaviour
         {
             slot.PlaceTower(basicTowerPrefab);
             LevelManager.main.currentGold -= coinSummon;
-            UIManager.instance.UpdateMoney();
+            UILevelManager.instance.UpdateMoney();
             Debug.Log("Tower spawned at slot: " + slot.name);
         }
     }

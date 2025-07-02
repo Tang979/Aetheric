@@ -27,7 +27,8 @@ public class TowerInstance : MonoBehaviour
 
     private void Start()
     {
-        valueTower = UpgradeCostCalculator.GetUpgradeCost(1, data.rarity);
+        if (valueTower <= 0)
+        valueTower = UpgradeCostCalculator.GetUpgradeCost(level, data.rarity);
         InitAttackLogic();
         UpdateStats();
     }
@@ -69,14 +70,16 @@ public class TowerInstance : MonoBehaviour
 
                 GameObject newTower = Instantiate(newTowerPrefab, pos, rot, parent);
                 newTower.GetComponent<TowerInstance>().SetLevel(level);
-                newTower.GetComponent<TowerInstance>().SetValueTower(valueTower += GetUpgradeCost());
+                valueTower += GetUpgradeCost();
+                newTower.GetComponent<TowerInstance>().SetValueTower(valueTower);
+                Debug.Log("Value Tower after upgrade: " + valueTower);
                 newTower.GetComponent<TowerInstance>().UpdateStats();
                 Destroy(this.gameObject);
                 TowerSelector selector = GetComponent<TowerSelector>();
                 selector.UpdatePanel(newTower.GetComponent<TowerInstance>());
                 return;
             }
-            valueTower += cost;
+            valueTower += GetUpgradeCost();
             UpdateStats();
         }
     }
@@ -88,10 +91,10 @@ public class TowerInstance : MonoBehaviour
         switch (data.attackType)
         {
             case TowerData.AttackType.Projectile:
-                CurrentAttackSpeed = data.projectileConfig.attackSpeed * Mathf.Pow(1.1f, level - 1);
+                CurrentAttackSpeed = data.attackSpeed * Mathf.Pow(1.1f, level - 1);
                 break;
             case TowerData.AttackType.Spray:
-                CurrentTickRate = data.sprayConfig.tickRate * Mathf.Pow(0.95f, level - 1);
+                CurrentTickRate = data.attackSpeed * Mathf.Pow(0.95f, level - 1);
                 break;
         }
     }

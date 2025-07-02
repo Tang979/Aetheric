@@ -11,7 +11,7 @@ public class BurnEffect : MonoBehaviour,IBulletEffect
         var spray = GetComponent<Spray>();
         if (status != null)
         {
-            var damage = spray.GetDamage();
+            var damage = spray.GetDamage() * 0.3f;
             var tickRate = spray.GetTickRate();
             status.ApplyEffect(StatusEffectType.Burn, duration, tickRate, damage);
             status.TryPlayVFX(StatusEffectType.Burn, burnVFXPrefab, duration);
