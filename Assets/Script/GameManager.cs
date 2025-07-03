@@ -41,7 +41,10 @@ public class GameManager : MonoBehaviour
             {
                 levelProgresses = new List<LevelProgress>(),
                 ownedTowerCards = new List<TowerCard>(),
-                Team = new List<string>(5)
+                Team = new List<string>(5),
+                username = "Guest",
+                email = "unknown@email.com",
+                phone = "N/A"
             };
 
             // Cấp 6 tháp mặc định cho người chơi
@@ -62,10 +65,11 @@ public class GameManager : MonoBehaviour
         int unlock = GetUnlockRequirement(tower.rarity);
         int upgrade = GetUpgradeRequirement(tower.rarity);
 
-        var card = new TowerCard(tower.towerName, unlock, upgrade);
-
-        card.level = 1;
-        card.ownedCards = 0;
+        var card = new TowerCard(tower.towerName, unlock, upgrade)
+        {
+            level = 1,
+            ownedCards = 0
+        };
 
         PlayerData.ownedTowerCards.Add(card);
         if (tower.towerName != "Basic")
@@ -104,6 +108,18 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(savePath, json);
     }
 
+    // ✅ Thêm hàm lưu dữ liệu người dùng từ Cognito
+    public void UpdateUserInfoFromCognito(string username, string email, string phone)
+    {
+        PlayerData.username = username;
+        PlayerData.email = email;
+        PlayerData.phone = phone;
+
+        SavePlayerData();
+        Debug.Log($"✅ User info updated: {username}, {email}, {phone}");
+    }
+
+    // Các phương thức quản lý team
     public bool TryAddToTeam(string towerName)
     {
         if (PlayerData.Team.Contains(towerName)) return false;
@@ -142,8 +158,13 @@ public class GameManager : MonoBehaviour
 public class PlayerData
 {
     public List<LevelProgress> levelProgresses = new();
-    public List<TowerCard> ownedTowerCards = new(); // Danh sách thẻ người chơi có
-    public List<string> Team = new(5); // Chỉ lưu tên tháp // Danh sách thẻ trong đội hình
+    public List<TowerCard> ownedTowerCards = new();
+    public List<string> Team = new(5);
+
+    // ✅ Thông tin người dùng từ Cognito
+    public string username;
+    public string email;
+    public string phone;
 
     public void AddTowerCard(string towerName, int quantity)
     {
@@ -164,7 +185,6 @@ public class PlayerData
             ownedTowerCards.Add(card);
         }
     }
-
 }
 
 [Serializable]

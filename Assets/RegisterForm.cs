@@ -30,9 +30,5 @@ public class RegisterManager : MonoBehaviour
 
         // TODO: Tích hợp Cognito đăng ký tại đây nếu cần
     }
-    public void BackToLogin()
-    {
-        if (registerPanel != null) registerPanel.SetActive(false);
-        if (loginPanel != null) loginPanel.SetActive(true);
-    }
+
 }

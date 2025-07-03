@@ -5,7 +5,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.Networking;
 using System.Text;
-using Doozy.Runtime.UIManager.Containers;
+using Doozy.Runtime.UIManager.Components;
 
 public class CognitoLogin : MonoBehaviour
 {
@@ -18,21 +18,68 @@ public class CognitoLogin : MonoBehaviour
     [Header("Buttons")]
     public Button SubmitButton;
     public Button registerButton;
+    public UIButton backButton;
 
     [Header("Panels")]
     public GameObject loginPanel;
     public GameObject registerPanel;
+    public GameObject userPanel;
+    public GameObject horizontalLayoutGroup;
 
-    [Header("Doozy View")]
-    public UIView loginView;        // Gán View - Login
-    public UIView mainMenuView;     // Gán View - MainMenu
-
-    [Header("UI Text")]
-    public TMP_Text loginText;      // Text để đổi tên "Login" thành email/user
+    [Header("Login Button Doozy")]
+    public UIButton userButton;
+    public TMP_Text loginButtonText;
 
     [Header("AWS Cognito")]
     public string region = "ap-southeast-2";
     public string clientId = "1iv1l3avi8ah3gn2b3ua03i81v";
+
+    [Header("UI Text")]
+    public TMP_Text loginText;
+
+    [Header("UserInfoToggle Ref")]
+    public UserInfoToggle userInfoToggle;
+
+    private bool isLoggedIn = false;
+
+    void Awake()
+    {
+        system = EventSystem.current;
+
+        if (PlayerPrefs.GetInt("IsLoggedIn", 0) == 1)
+        {
+            // ✅ Người dùng đã đăng nhập trước đó
+            string savedUsername = PlayerPrefs.GetString("LoggedUsername", "");
+
+            isLoggedIn = true;
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PlayerData.username = savedUsername;
+                GameManager.Instance.PlayerData.email = PlayerPrefs.GetString("LoggedEmail", "");
+                GameManager.Instance.PlayerData.phone = PlayerPrefs.GetString("LoggedPhone", "");
+            }
+
+            if (loginButtonText != null)
+                loginButtonText.text = savedUsername;
+
+            if (loginText != null)
+                loginText.text = savedUsername;
+
+            if (userInfoToggle != null)
+                userInfoToggle.SetUserButtonToUserPanel();
+        }
+        else
+        {
+            isLoggedIn = false;
+
+            if (loginButtonText != null)
+                loginButtonText.text = "Login";
+
+            if (loginText != null)
+                loginText.text = "";
+        }
+    }
 
     void Start()
     {
@@ -40,31 +87,81 @@ public class CognitoLogin : MonoBehaviour
 
         if (SubmitButton != null)
             SubmitButton.onClick.AddListener(OnLoginClicked);
-        else
-            Debug.LogWarning("❗ Chưa gán SubmitButton");
 
         if (registerButton != null)
             registerButton.onClick.AddListener(ShowRegisterPanel);
+
+        if (userButton != null)
+            userButton.onClickEvent.AddListener(OnUserButtonClicked);
+
+        if (backButton != null)
+            backButton.onClickEvent.AddListener(OnBackToHorizontalLayout);
         else
-            Debug.LogWarning("❗ Chưa gán registerButton");
+            Debug.LogWarning("⚠️ backButton chưa được gán!");
 
         if (mailInput != null)
             mailInput.Select();
+
+        // ✅ Tự động xử lý khi đã đăng nhập trước đó
+        if (PlayerPrefs.GetInt("IsLoggedIn", 0) == 1)
+        {
+            string savedUsername = PlayerPrefs.GetString("LoggedUsername", "User");
+
+            isLoggedIn = true;
+
+            if (horizontalLayoutGroup != null)
+                horizontalLayoutGroup.SetActive(true);
+
+            if (loginButtonText != null)
+                loginButtonText.text = savedUsername;
+
+            if (loginText != null)
+                loginText.text = savedUsername;
+
+            if (loginPanel != null)
+                loginPanel.SetActive(false);
+
+            if (userPanel != null)
+                userPanel.SetActive(false);
+
+            // Gán lại data cho GameManager nếu cần
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PlayerData.username = PlayerPrefs.GetString("LoggedUsername", "");
+                GameManager.Instance.PlayerData.email = PlayerPrefs.GetString("LoggedEmail", "");
+                GameManager.Instance.PlayerData.phone = PlayerPrefs.GetString("LoggedPhone", "");
+            }
+
+            // ⚠️ Gọi SetUserButtonToUserPanel để set behavior mới cho user button
+            if (userInfoToggle != null)
+            {
+                userInfoToggle.SetUserButtonToUserPanel();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ userInfoToggle chưa được gán!");
+            }
+        }
         else
-            Debug.LogWarning("❗ Chưa gán mailInput");
+        {
+            // Nếu chưa login, thì ẩn HorizontalLayout và hiện loginPanel nếu muốn
+            if (horizontalLayoutGroup != null)
+                horizontalLayoutGroup.SetActive(false);
+        }
     }
+
+
+
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && Input.GetKey(KeyCode.LeftShift))
         {
-            Selectable previous = system.currentSelectedGameObject?.GetComponent<Selectable>()?.FindSelectableOnUp();
-            previous?.Select();
+            system.currentSelectedGameObject?.GetComponent<Selectable>()?.FindSelectableOnUp()?.Select();
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Selectable next = system.currentSelectedGameObject?.GetComponent<Selectable>()?.FindSelectableOnDown();
-            next?.Select();
+            system.currentSelectedGameObject?.GetComponent<Selectable>()?.FindSelectableOnDown()?.Select();
         }
         else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
@@ -76,12 +173,18 @@ public class CognitoLogin : MonoBehaviour
     {
         if (loginPanel != null) loginPanel.SetActive(false);
         if (registerPanel != null) registerPanel.SetActive(true);
-        Debug.Log("👉 Chuyển sang panel đăng ký");
     }
 
     void OnLoginClicked()
     {
-        StartCoroutine(TryLogin());
+        if (loginPanel != null && loginPanel.activeInHierarchy)
+        {
+            StartCoroutine(TryLogin());
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ loginPanel đang bị ẩn hoặc null!");
+        }
     }
 
     IEnumerator TryLogin()
@@ -91,7 +194,7 @@ public class CognitoLogin : MonoBehaviour
 
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
-            Debug.LogWarning("⚠️ Vui lòng nhập đầy đủ Email và Password");
+            Debug.LogWarning("⚠️ Vui lòng nhập Email và Password");
             yield break;
         }
 
@@ -118,37 +221,95 @@ public class CognitoLogin : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("✅ Đăng nhập thành công!");
+            string responseText = request.downloadHandler.text;
 
-            // Ẩn panel và View login
-            if (loginPanel != null) loginPanel.SetActive(false);
-            if (loginView != null) loginView.Hide();
+            if (responseText.Contains("AuthenticationResult"))
+            {
+                Debug.Log("✅ Đăng nhập thành công!");
 
-            // Hiện Main Menu View
-            if (mainMenuView != null)
-            {
-                Debug.Log("👉 Hiện View - MainMenu");
-                mainMenuView.Show();
-            }
-            else
-            {
-                Debug.LogWarning("⚠️ Chưa gán UIView - MainMenu");
-            }
-
-            // Cập nhật tên user (ví dụ từ email)
-            if (loginText != null)
-            {
                 string username = email.Split('@')[0];
-                loginText.text = username;
+                string phone = "Chưa cập nhật";
+
+                PlayerPrefs.SetString("LoggedUsername", username);
+                PlayerPrefs.SetString("LoggedEmail", email);
+                PlayerPrefs.SetString("LoggedPhone", phone);
+                PlayerPrefs.SetInt("IsLoggedIn", 1);
+                PlayerPrefs.Save();
+
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.PlayerData.username = username;
+                    GameManager.Instance.PlayerData.email = email;
+                    GameManager.Instance.PlayerData.phone = phone;
+                    GameManager.Instance.SavePlayerData();
+                }
+
+                if (loginButtonText != null)
+                    loginButtonText.text = username;
+
+                if (loginText != null)
+                    loginText.text = username;
+
+                if (userInfoToggle != null)
+                    userInfoToggle.SetUserButtonToUserPanel();
+
+                if (horizontalLayoutGroup != null)
+                    horizontalLayoutGroup.SetActive(true);
+
+                if (loginPanel != null)
+                    loginPanel.SetActive(false);
+
+                if (userPanel != null)
+                    userPanel.SetActive(false);
+
+                isLoggedIn = true;
             }
             else
             {
-                Debug.LogWarning("⚠️ Chưa gán TMP_Text loginText");
+                Debug.LogError("❌ Sai thông tin đăng nhập!");
+                Debug.Log("Phản hồi: " + responseText);
             }
         }
         else
         {
-            Debug.LogError("❌ Đăng nhập thất bại: " + request.downloadHandler.text);
+            Debug.LogError("❌ Lỗi đăng nhập: " + request.downloadHandler.text);
         }
+    }
+
+    void OnUserButtonClicked()
+    {
+        if (isLoggedIn)
+        {
+            if (horizontalLayoutGroup != null)
+                horizontalLayoutGroup.SetActive(false);
+
+            if (loginPanel != null)
+                loginPanel.SetActive(false);
+
+            if (userPanel != null)
+                userPanel.SetActive(true);
+        }
+        else
+        {
+            if (loginPanel != null)
+                loginPanel.SetActive(true);
+
+            if (horizontalLayoutGroup != null)
+                horizontalLayoutGroup.SetActive(false);
+
+            if (userPanel != null)
+                userPanel.SetActive(false);
+        }
+    }
+
+    void OnBackToHorizontalLayout()
+    {
+        Debug.Log("🔙 Quay lại HorizontalLayout từ loginPanel");
+
+        if (loginPanel != null)
+            loginPanel.SetActive(false);
+
+        if (horizontalLayoutGroup != null)
+            horizontalLayoutGroup.SetActive(true);
     }
 }
