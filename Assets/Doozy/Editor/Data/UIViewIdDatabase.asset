@@ -15,7 +15,11 @@ MonoBehaviour:
   Database:
     Items:
     - Category: Demo
+      Name: Greeting
+    - Category: Demo
       Name: LoadScene
+    - Category: Demo
+      Name: Login
     - Category: Demo
       Name: MainLevel
     - Category: Demo

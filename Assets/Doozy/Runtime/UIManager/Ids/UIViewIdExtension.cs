@@ -26,7 +26,9 @@ namespace Doozy.Runtime.UIManager
     {
         public enum Demo
         {
+            Greeting,
             LoadScene,
+            Login,
             MainLevel,
             MainMenu,
             Profile,

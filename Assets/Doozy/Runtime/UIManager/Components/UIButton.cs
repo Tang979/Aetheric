@@ -22,13 +22,13 @@ namespace Doozy.Runtime.UIManager.Components
     [SelectionBase]
     public partial class UIButton : UISelectable, IPointerClickHandler, ISubmitHandler
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         [UnityEditor.MenuItem("GameObject/UI/Components/UIButton", false, 8)]
         private static void CreateComponent(UnityEditor.MenuCommand menuCommand)
         {
             GameObjectUtils.AddToScene<UIButton>("UIButton", false, true);
         }
-        #endif
+#endif
 
         /// <summary> UIButtons database </summary>
         public static HashSet<UIButton> database { get; private set; } = new HashSet<UIButton>();
@@ -136,7 +136,7 @@ namespace Doozy.Runtime.UIManager.Components
         /// <summary> Click the button and play the pressed state animations </summary>
         public void ClickWithAnimation() =>
             OnSubmit(null);
-        
+
         /// <summary> Click the button (no animation) </summary>
         public void Click() =>
             Click(false);
@@ -196,6 +196,11 @@ namespace Doozy.Runtime.UIManager.Components
             if (button == null) return false;
             button.Select();
             return true;
+        }
+
+        internal void ExecuteClick()
+        {
+            // throw new System.NotImplementedException();
         }
 
         #endregion

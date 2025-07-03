@@ -2105,6 +2105,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1444434269134045340, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899375842488629227, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
+      propertyPath: m_text
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3152708729641064725, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
       propertyPath: m_Name
       value: Game Setup
@@ -2113,6 +2121,10 @@ PrefabInstance:
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 258169936}
+    - target: {fileID: 5474822586289894145, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5827266433535995128, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
       propertyPath: StartPoint
       value: 
