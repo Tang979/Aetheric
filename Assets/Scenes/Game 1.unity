@@ -150,6 +150,91 @@ Transform:
   m_Children: []
   m_Father: {fileID: 969783381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &349765042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349765046}
+  - component: {fileID: 349765045}
+  - component: {fileID: 349765044}
+  - component: {fileID: 349765043}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &349765043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349765042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93696e3b3dd2833478fad2cee63e3780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerDetailView: {fileID: 0}
+  tempTeam: {fileID: 0}
+  iconImage: {fileID: 0}
+  teamCardPrefab: {fileID: 4154319083521514660, guid: a6cf800fbdf31874e843a507c47dac8f, type: 3}
+  equipButton: {fileID: 0}
+  upgradeButton: {fileID: 0}
+  nameLabel: {fileID: 0}
+  txtDame: {fileID: 0}
+  txtDameAfter: {fileID: 0}
+  txtSpeed: {fileID: 0}
+  txtSpeedAfter: {fileID: 0}
+  descriptionLabel: {fileID: 0}
+--- !u!114 &349765044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349765042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24f1b1c59087d84ba71567f35a5091c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewardDatabase: {fileID: 11400000, guid: 4c8cda96157a3b94db88b807fd0abd37, type: 2}
+  towerDatabase: {fileID: 11400000, guid: b7e553ac0f36f70498ca74bd9c76f6be, type: 2}
+--- !u!114 &349765045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349765042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 019484ca5982e2a4db0330cd66834d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerCardDatabase: {fileID: 11400000, guid: b7e553ac0f36f70498ca74bd9c76f6be, type: 2}
+--- !u!4 &349765046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349765042}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &380678615
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,6 +2190,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1444434269134045340, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3152708729641064725, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
       propertyPath: m_Name
       value: Game Setup
@@ -2113,6 +2202,10 @@ PrefabInstance:
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 258169936}
+    - target: {fileID: 4919736326029254533, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
+      propertyPath: selectedSpecialTowers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5827266433535995128, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
       propertyPath: StartPoint
       value: 
@@ -2139,6 +2232,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 5909655508581432878}
+  - {fileID: 349765046}
   - {fileID: 380678616}
   - {fileID: 1627621707}
   - {fileID: 969783381}

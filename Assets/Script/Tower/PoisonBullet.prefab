@@ -79,9 +79,9 @@ VisualEffect:
           m_Curve:
           - serializedVersion: 3
             time: 0
-            value: 0.7
-            inSlope: -0.7
-            outSlope: -0.7
+            value: 0.6
+            inSlope: -0.6
+            outSlope: -0.6
             tangentMode: 34
             weightedMode: 0
             inWeight: 0
@@ -89,8 +89,8 @@ VisualEffect:
           - serializedVersion: 3
             time: 1
             value: 0
-            inSlope: -0.7
-            outSlope: -0.7
+            inSlope: -0.6
+            outSlope: -0.6
             tangentMode: 34
             weightedMode: 0
             inWeight: 0.33333334
@@ -193,8 +193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6d1111e3549a44e9650ee0caec057a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   prefabOrigin: {fileID: 4915179156190182582}
+  objectEfect: {fileID: 0}
 --- !u!114 &1014492017176972152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 4
-  damagePerTick: 0.5
   tickRate: 0.4
   areaChance: 0.2
   poisonAreaPrefab: {fileID: 1875991548473235974, guid: 52c3a77db398b8640a18d748df61b4db, type: 3}

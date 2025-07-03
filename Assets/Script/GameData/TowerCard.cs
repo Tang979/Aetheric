@@ -29,6 +29,7 @@ public class TowerCard
     {
         level++;
         cardsToUpgrade = GetUpgradeRequirement(level, rarity);
+
     }
 
     public static int GetUnlockRequirement(TowerData.TowerRarity rarity)

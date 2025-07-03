@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Doozy.Runtime.UIManager.Containers;
 
 public class TowerCardDisplayManager : MonoBehaviour
 {
@@ -18,13 +19,12 @@ public class TowerCardDisplayManager : MonoBehaviour
 
     [Header("Prefab thẻ")]
     [SerializeField] private GameObject towerCardPrefab;
-    [SerializeField] private GameObject teamCardPrefab;
+    [SerializeField] private GameObject teamCardPrefab, emptySlotPrefab;
 
     private void Start()
     {
         DisplayAllTowers();
         LoadTeamUI();
-
         // Đăng ký sự kiện nâng cấp
         CardUI.OnTowerUpgraded += RefreshCardUI;
     }
@@ -52,7 +52,7 @@ public class TowerCardDisplayManager : MonoBehaviour
 
             var cardGO = Instantiate(towerCardPrefab, targetContainer);
 
-            var icon = cardGO.transform.Find("Vertical/Button - Upgrade/Icon").GetComponent<UnityEngine.UI.Image>();
+            var icon = cardGO.transform.Find("Vertical/Button - ShowTowerDetailPopup/Icon").GetComponent<UnityEngine.UI.Image>();
 
             if (tower.isComingSoon)
             {
@@ -64,26 +64,24 @@ public class TowerCardDisplayManager : MonoBehaviour
             {
                 icon.sprite = tower.icon;
                 icon.color = Color.white;
+                var cardUI = cardGO.GetComponent<CardUI>();
+                cardUI.SetupCard(tower);
 
-                if (isOwned)
-                {
-                    var cardUI = cardGO.GetComponent<CardUI>();
-                    cardUI.SetupCard(tower);
-
-                    var lvText = cardGO.transform.Find("Vertical/txt_level").GetComponent<TMP_Text>();
-                    if (lvText != null)
-                        lvText.text = $"Lv {GetTowerLevel(tower.towerName)}";
-                }
+                var lvText = cardGO.transform.Find("Vertical/txt_level").GetComponent<TMP_Text>();
+                if (lvText != null)
+                    lvText.text = $"Lv {GetTowerLevel(tower.towerName)}";
             }
             else
             {
+                Debug.Log("panel not owned");
+                Debug.Log(tower.towerName);
                 icon.sprite = tower.icon;
                 var lvText = cardGO.transform.Find("Vertical/txt_level").GetComponent<TMP_Text>();
                 if (lvText != null)
-                        lvText.text = $"Lv {GetTowerLevel(tower.towerName)}";
+                    lvText.text = $"Lv {GetTowerLevel(tower.towerName)}";
                 var cardUI = cardGO.GetComponent<CardUI>();
                 cardUI.SetupNotOwned(tower);
-                Debug.Log("panel not owned");
+                
             }
 
 
@@ -106,7 +104,7 @@ public class TowerCardDisplayManager : MonoBehaviour
 
         var card = basicCard.GetComponent<CardUI>();
         card.SetupCardTeam(basicTower);
-        basicCard.transform.Find("Vertical/Button - Upgrade/Icon").GetComponent<UnityEngine.UI.Image>().sprite = basicTower.icon;
+        basicCard.transform.Find("Vertical/Button - ShowTowerDetailPopup/Icon").GetComponent<UnityEngine.UI.Image>().sprite = basicTower.icon;
         basicCard.transform.Find("Vertical/txt_level").GetComponent<TMP_Text>().text = $"Lv {GetTowerLevel(basicId)}";
 
         // Team towers
@@ -116,8 +114,15 @@ public class TowerCardDisplayManager : MonoBehaviour
             var cardGO = Instantiate(teamCardPrefab, horizontalContainer);
             var cardTeam = cardGO.GetComponent<CardUI>();
             cardTeam.SetupCardTeam(towerData);
-            cardGO.transform.Find("Vertical/Button - Upgrade/Icon").GetComponent<UnityEngine.UI.Image>().sprite = towerData.icon;
+            cardGO.transform.Find("Vertical/Button - ShowTowerDetailPopup/Icon").GetComponent<UnityEngine.UI.Image>().sprite = towerData.icon;
             cardGO.transform.Find("Vertical/txt_level").GetComponent<TMP_Text>().text = $"Lv {GetTowerLevel(towerData.towerName)}";
+        }
+
+        // Thêm slot trống nếu chưa đủ 5 thẻ trong team
+        int remainingSlots = 5 - team.Count;
+        for (int i = 0; i < remainingSlots; i++)
+        {
+            var emptySlot = Instantiate(emptySlotPrefab, horizontalContainer);
         }
     }
 

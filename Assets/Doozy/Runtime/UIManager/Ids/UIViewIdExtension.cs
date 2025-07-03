@@ -31,6 +31,7 @@ namespace Doozy.Runtime.UIManager
             MainMenu,
             Profile,
             Setting,
+            TowerDetailPopup,
             Upgrade,
             UpgradeDefautview
         }    

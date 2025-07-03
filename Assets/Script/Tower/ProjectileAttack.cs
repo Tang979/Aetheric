@@ -44,7 +44,7 @@ public class ProjectileAttack : MonoBehaviour, ITowerAttack
         bullet.transform.position = tower.transform.position;
         bullet.transform.rotation = Quaternion.identity;
 
-        Bullet b = bullet.GetComponent<Bullet>();
+        Bullet b = bullet.GetComponentInChildren<Bullet>();
         b.prefabOrigin = prefabToUse;
         b.SetTarget(target);
         b.SetDamage(usedDamage);

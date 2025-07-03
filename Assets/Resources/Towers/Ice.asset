@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Ice
   m_EditorClassIdentifier: 
   towerName: Ice
+  specialTowerPrefab: {fileID: 6817748358780700003, guid: 750bacef0b8a9d346a18d20d3b131442, type: 3}
   rarity: 0
   isBasicTower: 0
   isComingSoon: 0
@@ -25,3 +26,5 @@ MonoBehaviour:
   attackRange: 3.2
   baseDamage: 7.5
   bulletPrefab: {fileID: 6518515802239445656, guid: 608352790819ee943b677f0ba212d241, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

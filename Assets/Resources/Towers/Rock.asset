@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   towerName: Rock
+  specialTowerPrefab: {fileID: 7476446187038016283, guid: 2c2c3dea2139a2f40a29be922a4c9128, type: 3}
   rarity: 0
   isBasicTower: 0
   isComingSoon: 0
@@ -25,3 +26,5 @@ MonoBehaviour:
   attackRange: 2.7
   baseDamage: 18
   bulletPrefab: {fileID: 7510811118829891953, guid: 56a4ab508053013489e2986c3ee78858, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

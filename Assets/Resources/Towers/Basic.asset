@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Basic
   m_EditorClassIdentifier: 
   towerName: Basic
+  specialTowerPrefab: {fileID: 6349493916878995178, guid: bbf963c3b1ce19f45a37419d56318c2d, type: 3}
   rarity: 0
   isBasicTower: 1
   isComingSoon: 0
@@ -25,3 +26,5 @@ MonoBehaviour:
   attackRange: 2.8
   baseDamage: 15
   bulletPrefab: {fileID: 7720280996812998114, guid: 47ad860db90e83b44b7f0d43e963e6b0, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

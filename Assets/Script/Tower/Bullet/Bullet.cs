@@ -1,71 +1,87 @@
-using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float speed = 10f;
     private float damage;
-
     private Transform target;
+    private float rotateSpeed = 360f;
+    public GameObject prefabOrigin;
+    public GameObject objectEfect;
+
+    private bool isProcessingEffect = false;
 
     public void SetTarget(Transform _target)
     {
+        if(objectEfect != null)
+            objectEfect.SetActive(true);
         target = _target;
         if (target != null)
         {
-            Vector2 direction = (target.position - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+            Vector2 dir = (target.position - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
-    public void SetDamage(float _damage)
-    {
-        damage = _damage;
-    }
 
-    public float GetDamage()
-    {
-        return damage;
-    }
+    public void SetDamage(float _damage) => damage = _damage;
+    public float GetDamage() => damage;
 
     void Update()
     {
+
         if (target == null || !target.gameObject.activeInHierarchy)
         {
             ReturnToPool();
             return;
         }
 
-        Vector2 direction = (target.position - transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        // Di chuyển
+        Vector2 dir = (target.position - transform.position).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, angle), rotateSpeed * Time.deltaTime);
+        transform.Translate(dir * speed * Time.deltaTime, Space.World);
 
-        transform.Translate(direction * speed * Time.deltaTime, Space.World);
-
-        // Kiểm tra va chạm đơn giản bằng khoảng cách
+        // Va chạm đơn giản
         if (Vector2.Distance(transform.position, target.position) < 0.2f)
         {
-            // Gây sát thương
-            var health = target.GetComponent<EnemyHealth>();
-            if (health != null)
-            {
-                health.TakeDamage(damage);
-            }
+            ApplyHitEffects();
+        }
+    }
 
-            foreach (var effect in GetComponents<IBulletEffect>())
-            {
-                effect.ApplyEffect(target);
-            }
+    private void ApplyHitEffects()
+    {
+        var health = target.GetComponent<EnemyHealth>();
+        if (health != null)
+        {
+            health.TakeDamage(damage);
+        }
 
+        bool skipAutoReturn = false;
+
+        foreach (var effect in GetComponents<IBulletEffect>())
+        {
+            effect.ApplyEffect(target);
+
+            if (effect is ISpecialBulletEffect special && special.ShouldSkipAutoReturn)
+            {
+                skipAutoReturn = true;
+            }
+        }
+
+        if (!skipAutoReturn)
+        {
             ReturnToPool();
         }
     }
 
-    public GameObject prefabOrigin;
-    private float rotateSpeed = 360f; 
-
-    void ReturnToPool()
+    public void ReturnToPool()
     {
-        BulletPool.Instance.ReturnBullet(gameObject, prefabOrigin);
+        // Dừng tất cả hiệu ứng VFX nếu có
+        if (objectEfect != null)
+            objectEfect.SetActive(false);
+
+        // isProcessingEffect = false;
+            BulletPool.Instance.ReturnBullet(gameObject, prefabOrigin);
     }
 }

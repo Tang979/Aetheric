@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   towerName: Fire
+  specialTowerPrefab: {fileID: 8943999057239096784, guid: e035e7a6f7a9e6444b686706f9010058, type: 3}
   rarity: 0
   isBasicTower: 0
   isComingSoon: 0
@@ -25,3 +26,5 @@ MonoBehaviour:
   attackRange: 2.9
   baseDamage: 9
   bulletPrefab: {fileID: 6518515802239445656, guid: 5ea537d1752b3da4ba26ff9884b085cd, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

@@ -31,6 +31,8 @@ MonoBehaviour:
     - Category: Demo
       Name: Setting
     - Category: Demo
+      Name: ShowTowerDetailPopup
+    - Category: Demo
       Name: Upgrade
     - Category: None
       Name: None

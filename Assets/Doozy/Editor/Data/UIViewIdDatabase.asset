@@ -25,6 +25,8 @@ MonoBehaviour:
     - Category: Demo
       Name: Setting
     - Category: Demo
+      Name: TowerDetailPopup
+    - Category: Demo
       Name: Upgrade
     - Category: Demo
       Name: UpgradeDefautview

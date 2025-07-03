@@ -3,8 +3,8 @@ using UnityEngine.EventSystems;
 
 public class TowerSelector : MonoBehaviour
 {
-    public LayerMask towerLayer;
-    public TowerUIManager uiManager;
+    private LayerMask towerLayer;
+    private TowerUIManager uiManager;
 
     private void Awake()
     {

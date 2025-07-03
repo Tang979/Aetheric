@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd76c0fc98e49b88d5146f8747eae7f, type: 3}
   m_Name: UIPopupDatabase
   m_EditorClassIdentifier: 
-  Database: []
+  Database:
+  - {fileID: 11400000, guid: 133a5b0a3435c424a951fcfedb6cbc4d, type: 2}
+  - {fileID: 11400000, guid: 9cfc9665aed030446bcab743e91bfad3, type: 2}
+  - {fileID: 11400000, guid: 4d8b44d5990791b4390addc59c0ffe67, type: 2}

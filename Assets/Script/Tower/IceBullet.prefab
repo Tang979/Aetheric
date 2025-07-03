@@ -187,10 +187,10 @@ VisualEffect:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
-            time: 0.0012931824
-            value: 0.5
-            inSlope: -0.5006474
-            outSlope: -0.5006474
+            time: 0
+            value: 0.25
+            inSlope: -0.25
+            outSlope: -0.25
             tangentMode: 34
             weightedMode: 0
             inWeight: 0
@@ -198,8 +198,8 @@ VisualEffect:
           - serializedVersion: 3
             time: 1
             value: 0
-            inSlope: -0.5006474
-            outSlope: -0.5006474
+            inSlope: -0.25
+            outSlope: -0.25
             tangentMode: 34
             weightedMode: 0
             inWeight: 0.33333334

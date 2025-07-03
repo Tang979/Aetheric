@@ -86,15 +86,15 @@ public class TowerInstance : MonoBehaviour
 
     private void UpdateStats()
     {
-        CurrentDamage = data.baseDamage * (1 + 0.2f * (level - 1));
-
+        var card = GameManager.Instance.PlayerData.ownedTowerCards.Find(c => c.towerName == data.towerName);
+        CurrentDamage = TowerData.GetDamage(data,card.level) * (1 + 0.2f * (level - 1));
         switch (data.attackType)
         {
             case TowerData.AttackType.Projectile:
-                CurrentAttackSpeed = data.attackSpeed * Mathf.Pow(1.1f, level - 1);
+                CurrentAttackSpeed = TowerData.GetAttackSpeed(data,card.level) * Mathf.Pow(1.1f, level - 1);
                 break;
             case TowerData.AttackType.Spray:
-                CurrentTickRate = data.attackSpeed * Mathf.Pow(0.95f, level - 1);
+                CurrentTickRate = TowerData.GetAttackSpeed(data,card.level) * Mathf.Pow(0.95f, level - 1);
                 break;
         }
     }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   towerName: Poison
+  specialTowerPrefab: {fileID: 2794618628216375086, guid: 080d96b6914d9234e8b4d74cca80e6a2, type: 3}
   rarity: 0
   isBasicTower: 0
   isComingSoon: 0
@@ -25,3 +26,5 @@ MonoBehaviour:
   attackRange: 3
   baseDamage: 8.5
   bulletPrefab: {fileID: 4915179156190182582, guid: 6066219a240fd2942a38470a5cfe4e60, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

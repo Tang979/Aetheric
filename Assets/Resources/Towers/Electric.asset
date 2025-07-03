@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Electric
   m_EditorClassIdentifier: 
   towerName: Electric
+  specialTowerPrefab: {fileID: 7884440473453422923, guid: d95647ac4565e6b42b732450e4360b2a, type: 3}
   rarity: 0
   isBasicTower: 0
   isComingSoon: 0
   icon: {fileID: 1705577960, guid: d78a93234e551894aab24649d1958bff, type: 3}
-  attackSpeed: 0
-  descriptionSkill: 
+  attackSpeed: 0.4
+  descriptionSkill: "Ph\xF3ng tia s\xE9t lan truy\u1EC1n qua t\u1ED1i \u0111a 3 k\u1EBB
+    \u0111\u1ECBch g\u1EA7n nhau."
   attackType: 0
-  attackRange: 0
-  baseDamage: 0
-  bulletPrefab: {fileID: 0}
+  attackRange: 2.5
+  baseDamage: 8
+  bulletPrefab: {fileID: 7848100065963737555, guid: 9754862bc71c64d4cac4dcb24797334f, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

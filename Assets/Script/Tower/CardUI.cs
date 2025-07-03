@@ -26,15 +26,17 @@ public class CardUI : MonoBehaviour
             Debug.LogWarning($"Không tìm thấy TowerCard với tên {towerData.towerName}");
         }
         var ownedCards = card.ownedCards;
-        sliderUpgrade.maxValue = GameManager.Instance.GetUpgradeRequirement(towerData.rarity);
+        sliderUpgrade.maxValue = card.GetRequiredToUpgrade();
         sliderUpgrade.value = ownedCards;
+
         upgradeButton.onClickEvent.RemoveAllListeners();
         upgradeButton.onClickEvent.AddListener(() =>
         {
-            if (ownedCards >= sliderUpgrade.maxValue)
+            if (UIManager.Instance.TryUpgradeTower(towerData, out card))
             {
                 card.ownedCards -= (int)sliderUpgrade.maxValue;
                 card.level++;
+                card.cardsToUpgrade = TowerCard.GetUpgradeRequirement(card.level,towerData.rarity);
                 GameManager.Instance.SavePlayerData();
 
                 // Gửi sự kiện nâng cấp
@@ -56,6 +58,7 @@ public class CardUI : MonoBehaviour
     public void SetupCardTeam(TowerData towerData)
     {
         this.towerData = towerData;
+
         cardButton.onClickEvent.RemoveAllListeners();
         cardButton.onClickEvent.AddListener(OnClick);
     }
@@ -64,13 +67,17 @@ public class CardUI : MonoBehaviour
     {
         this.towerData = towerData;
         var panelNotOwned = transform.Find("Not Owned");
+        Debug.Log(towerData);
         panelNotOwned.gameObject.SetActive(true);
         TowerCard card = GameManager.Instance.PlayerData.ownedTowerCards.Find(c => c.towerName == towerData.towerName);
+        sliderUpgrade.maxValue = GameManager.Instance.GetUpgradeRequirement(towerData.rarity);
+        if (card == null) return;
         unlockButton.interactable = card.ownedCards >= card.GetRequiredToUnlock(); // Cho click nếu đủ
         unlockButton.onClickEvent.RemoveAllListeners();
         unlockButton.onClickEvent.AddListener(() => TryUnlock(card));
 
-        sliderUpgrade.maxValue = GameManager.Instance.GetUpgradeRequirement(towerData.rarity);
+        
+        Debug.Log(card);
         sliderUpgrade.value = card.ownedCards;
         textUpgrade.text = card.ownedCards.ToString() + " / " + sliderUpgrade.maxValue;
     }

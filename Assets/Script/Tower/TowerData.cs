@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TowerData", menuName = "Aetheric/Tower Data")]
@@ -5,6 +6,7 @@ public class TowerData : ScriptableObject
 {
     [Header("Thông tin cơ bản")]
     public string towerName;
+    public GameObject specialTowerPrefab;
     public TowerRarity rarity;
     public bool isBasicTower = false;
     public bool isComingSoon = false;
@@ -61,5 +63,24 @@ public class TowerData : ScriptableObject
             default:
                 return new TowerStats();
         }
+    }
+    public static float GetDamage(TowerData data, int level)
+    {
+        float damage = data.baseDamage * (1f + 0.1f * (level - 1)); // Tăng 10% mỗi cấp
+        return (float)Math.Round(damage, 1); // Làm tròn 1 chữ số thập phân
+    }
+
+    public float attackSpeedPerLevel = 0.1f;
+    public float minAttackInterval = 0.2f; // tối đa bắn 5 lần/giây
+
+    public static float GetAttackSpeed(TowerData data, int level)
+    {
+        // Giảm 0.05 mỗi cấp, và không thấp hơn minSpeed
+        float minSpeed = 0.2f; // tùy vào mức tối thiểu bạn cho phép
+        float speed = data.attackSpeed - (level - 1) * 0.02f;
+        speed = Mathf.Max(speed, minSpeed);
+
+        // Làm tròn 1 chữ số thập phân
+        return (float)Math.Round(speed, 1);
     }
 }

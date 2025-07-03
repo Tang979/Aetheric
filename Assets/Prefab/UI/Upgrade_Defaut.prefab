@@ -5450,7 +5450,7 @@ GameObject:
   - component: {fileID: 4912743028189830047}
   - component: {fileID: 3094480307845630230}
   m_Layer: 5
-  m_Name: Button - Upgrade
+  m_Name: Button - ShowTowerDetailPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5584,8 +5584,8 @@ MonoBehaviour:
   Cooldown: 0
   DisableWhenInCooldown: 0
   Id:
-    Category: Demo
-    Name: Upgrade
+    Category: None
+    Name: None
     Custom: 0
 --- !u!114 &3094480307845630230
 MonoBehaviour:

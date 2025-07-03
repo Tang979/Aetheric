@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             };
 
             // Cấp 6 tháp mặc định cho người chơi
-            string[] starterTowerIds = new string[] { "Fire", "Ice", "Poison", "Rock", "Basic" };
+            string[] starterTowerIds = new string[] { "Fire", "Ice", "Poison", "Rock", "Electric", "Basic" };
 
             foreach (string id in starterTowerIds)
             {
@@ -104,38 +104,75 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(savePath, json);
     }
 
-    public bool TryAddToTeam(string towerName)
+    public void TryAddTowerToTeam(string towerName)
     {
-        if (PlayerData.Team.Contains(towerName)) return false;
-        if (PlayerData.Team.Count >= 5) return false;
+        if (PlayerData.Team.Contains(towerName))
+        {
+            Debug.Log("Tháp đã có trong team");
+            return;
+        }
 
-        PlayerData.Team.Add(towerName);
-        return true;
+        if (!IsTeamValid())
+        {
+            PlayerData.Team.Add(towerName);
+            UIManager.Instance.towerDetailView.Hide();
+            TowerCardDisplayManager cardDisplayManager = FindFirstObjectByType<TowerCardDisplayManager>();
+            SavePlayerData();
+            cardDisplayManager.LoadTeamUI();
+            return;
+        }
+
+        Debug.Log("Team đã đầy");
+        if (towerName == "Basic") return;
+        UIManager.Instance.loadTempTeam(towerName);
+        return;
     }
 
-    public bool ReplaceTowerInTeam(string oldTower, string newTower)
+    public void ReplaceTowerInTeam(string oldTower, string newTower)
     {
         int index = PlayerData.Team.IndexOf(oldTower);
-        if (index == -1 || PlayerData.Team.Contains(newTower)) return false;
+        if (index == -1)
+        {
+            Debug.Log("Không tìm thấy tháp cũ trong team");
+            return;
+        }
+
+        if (PlayerData.Team.Contains(newTower))
+        {
+            Debug.Log("Tháp mới đã tồn tại trong team");
+            return;
+        }
 
         PlayerData.Team[index] = newTower;
-        return true;
+        UIManager.Instance.tempTeam.Hide();
+        TowerCardDisplayManager cardDisplayManager = FindFirstObjectByType<TowerCardDisplayManager>();
+        SavePlayerData();
+        cardDisplayManager.LoadTeamUI();
+        return;
     }
 
-    public bool RemoveAndAddToTeam(string toRemove, string toAdd)
+    public void RemoveTowerFromTeam(string towerName)
     {
-        if (!PlayerData.Team.Contains(toRemove)) return false;
-        if (PlayerData.Team.Contains(toAdd)) return false;
+        if (PlayerData.Team.Contains(towerName))
+        {
+            PlayerData.Team.Remove(towerName);
+            UIManager.Instance.towerDetailView.Hide();
+            TowerCardDisplayManager cardDisplayManager = FindFirstObjectByType<TowerCardDisplayManager>();
+            SavePlayerData();
+            cardDisplayManager.LoadTeamUI();
+            return;
+        }
 
-        int index = PlayerData.Team.IndexOf(toRemove);
-        PlayerData.Team[index] = toAdd;
-        return true;
+        Debug.Log("Tháp không có trong team");
+        return;
     }
+
 
     public bool IsTeamValid()
     {
         return PlayerData.Team.Count == 5;
     }
+
 }
 
 [Serializable]

@@ -31,6 +31,11 @@ public class SettingMenu : MonoBehaviour
         Debug.Log("Game Resumed from Resume Button");
     }
 
+    public void Quit()
+    {
+        SceneManager.LoadScene("Demo 1");
+    }
+
     public void RestartGame()
     {
         Time.timeScale = 1f; // Đảm bảo game không bị pause khi restart

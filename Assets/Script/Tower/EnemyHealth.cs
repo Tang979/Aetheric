@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    private float maxHealth = 5;
+    [SerializeField] private float maxHealth = 5;
 
     private float currentHealth;
     [SerializeField] private int coinReward = 10;
@@ -35,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (isDead) return; // Bảo vệ không cho chạy lần 2
         isDead = true;
-        
+
         var levelManager = LevelManager.main;
         if (levelManager != null)
         {
