@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Modernizing Mobile Game Backend with AWS Cloud Services on AWS System Manager</title>
-    <link>/</link>
+    <link>https://tang979.github.io/Aetheric/</link>
     <description>Recent content in Modernizing Mobile Game Backend with AWS Cloud Services on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tang979.github.io/Aetheric/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
