@@ -49,6 +49,13 @@
 	"content": " Go to the user you just created in the User Pool, and under the Overview section, copy the value ap-southeast-2.\nIn the App client section, copy the Client ID.\nIn your Unity project, locate the code section for the Register and Confirm pages. Create two variables: clientId and region. Assign the Client ID and Region values from your User Pool.\nEnter your registration information and click Register.\nAfter successful registration, you will receive a confirmation code via email. Copy the code.\nGo back to the Verify Email section:\nEnter the Confirmation Code you received. Click the Submit button.\nGo back to Amazon Cognito, navigate to Users under User Management.\nClick on the newly created user, scroll down to the User attributes section, and you’ll see your user information.\n"
 },
 {
+	"uri": "/2-prerequiste-copy/2.3-clear/",
+	"title": "Cleanup",
+	"tags": [],
+	"description": "",
+	"content": " Open the Amazon Cognito console\nSelect User pools from the menu on the left. Choose the User Pool (… the one you created earlier). Click the Delete button. In the \u0026ldquo;Delete user pool – …?\u0026rdquo; popup:\nSelect Delete Cognito domain … and Deactivate deletion protection. Type the User Pool name into the To confirm deletion field. Click the Delete button. "
+},
+{
 	"uri": "/3-accessibilitytoinstances/",
 	"title": "Push Game Data from Unity to Amazon DynamoDB",
 	"tags": [],

@@ -95,6 +95,16 @@
   </url><url>
     <loc>/vi/2-prerequiste-copy/2.3-clear/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/2-prerequiste-copy/2.3-clear/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/2-prerequiste-copy/2.3-clear/"
+                />
   </url><url>
     <loc>/vi/3-accessibilitytoinstances/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
