@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666f0f598e8700a4fbf831a14dbfd540, type: 3}
+  m_Name: Rock
+  m_EditorClassIdentifier: 
+  towerName: Rock
+  specialTowerPrefab: {fileID: 7476446187038016283, guid: 2c2c3dea2139a2f40a29be922a4c9128, type: 3}
+  rarity: 0
+  isBasicTower: 0
+  isComingSoon: 0
+  icon: {fileID: -1509284057, guid: 8aa22aa751e6dcc45ba98214875ba418, type: 3}
+  attackSpeed: 1.2
+  descriptionSkill: "T\u1EA5n c\xF4ng \u0111\u01A1n m\u1EE5c ti\xEAu v\u1EDBi s\xE1t
+    th\u01B0\u01A1ng cao, c\xF3 t\u1EC9 l\u1EC7 b\u1EAFn ra \u0111\u1EA1n c\u1EE1
+    l\u1EDBn g\xE2y s\xE1t th\u01B0\u01A1ng g\u1EA5p ba l\u1EA7n."
+  attackType: 0
+  attackRange: 2.7
+  baseDamage: 18
+  bulletPrefab: {fileID: 7510811118829891953, guid: 56a4ab508053013489e2986c3ee78858, type: 3}
+  attackSpeedPerLevel: 0.1
+  minAttackInterval: 0.2

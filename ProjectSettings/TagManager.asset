@@ -2,18 +2,20 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Enemy
+  - Audio
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bullet
   - Water
   - UI
+  - Enemy
   - 
-  - 
-  - 
+  - Turret
   - 
   - 
   - 
@@ -41,3 +43,32 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 334742081
+    locked: 0
+  - name: Road
+    uniqueID: 3363023903
+    locked: 0
+  - name: Decor
+    uniqueID: 2148609289
+    locked: 0
+  - name: Base
+    uniqueID: 2348217145
+    locked: 0
+  - name: EffectBullet
+    uniqueID: 1912532479
+    locked: 0
+  - name: Enemy
+    uniqueID: 1866505793
+    locked: 0
+  - name: Effect
+    uniqueID: 1507827553
+    locked: 0
+  - name: Turret
+    uniqueID: 3411722135
+    locked: 0
+  - name: Bullet
+    uniqueID: 1479343153
+    locked: 0
+  m_RenderingLayers:
+  - Default
