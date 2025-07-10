@@ -12,7 +12,7 @@ public class CognitoConfirm : MonoBehaviour
 
     [Header("AWS Cognito configs")]
     public string region = "ap-southeast-2"; // vùng AWS
-    public string clientId = "1iv1l3avi8ah3gn2b3ua03i81v"; // App client ID
+    public string clientId = "5p8jmsjfbflsmvlkuvlm2tf5sj"; // App client ID
 
     [Header("UI Panels")]
     public GameObject confirmationPanel;

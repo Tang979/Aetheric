@@ -6,6 +6,9 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Text;
 using Doozy.Runtime.UIManager.Components;
+using System.Security.Cryptography;
+using System;
+
 
 public class CognitoLogin : MonoBehaviour
 {
@@ -31,8 +34,20 @@ public class CognitoLogin : MonoBehaviour
     public TMP_Text loginButtonText;
 
     [Header("AWS Cognito")]
-    public string region = "ap-southeast-2";
-    public string clientId = "1iv1l3avi8ah3gn2b3ua03i81v";
+    [SerializeField] private string region = "ap-southeast-2";
+    [SerializeField] private string clientId = "5p8jmsjfbflsmvlkuvlm2tf5sj";
+
+    [Header("DynamoDB Settings")]
+    [SerializeField] private string identityPoolId = "ap-southeast-2:cb73616f-0288-49a6-a0d2-a8ed98486edc";
+    [SerializeField] private string userPoolId = "ap-southeast-2_peDwwenxf";
+    [SerializeField] private string dynamoTableName = "Aetheric_PlayerData";
+
+    private string accessToken;
+    private string idToken;
+    private string identityId;
+    private string awsAccessKey;
+    private string awsSecretKey;
+    private string awsSessionToken;
 
     [Header("UI Text")]
     public TMP_Text loginText;
@@ -48,9 +63,7 @@ public class CognitoLogin : MonoBehaviour
 
         if (PlayerPrefs.GetInt("IsLoggedIn", 0) == 1)
         {
-            // ✅ Người dùng đã đăng nhập trước đó
             string savedUsername = PlayerPrefs.GetString("LoggedUsername", "");
-
             isLoggedIn = true;
 
             if (GameManager.Instance != null)
@@ -96,17 +109,13 @@ public class CognitoLogin : MonoBehaviour
 
         if (backButton != null)
             backButton.onClickEvent.AddListener(OnBackToHorizontalLayout);
-        else
-            Debug.LogWarning("⚠️ backButton chưa được gán!");
 
         if (mailInput != null)
             mailInput.Select();
 
-        // ✅ Tự động xử lý khi đã đăng nhập trước đó
         if (PlayerPrefs.GetInt("IsLoggedIn", 0) == 1)
         {
             string savedUsername = PlayerPrefs.GetString("LoggedUsername", "User");
-
             isLoggedIn = true;
 
             if (horizontalLayoutGroup != null)
@@ -124,7 +133,6 @@ public class CognitoLogin : MonoBehaviour
             if (userPanel != null)
                 userPanel.SetActive(false);
 
-            // Gán lại data cho GameManager nếu cần
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.PlayerData.username = PlayerPrefs.GetString("LoggedUsername", "");
@@ -132,26 +140,15 @@ public class CognitoLogin : MonoBehaviour
                 GameManager.Instance.PlayerData.phone = PlayerPrefs.GetString("LoggedPhone", "");
             }
 
-            // ⚠️ Gọi SetUserButtonToUserPanel để set behavior mới cho user button
             if (userInfoToggle != null)
-            {
                 userInfoToggle.SetUserButtonToUserPanel();
-            }
-            else
-            {
-                Debug.LogWarning("⚠️ userInfoToggle chưa được gán!");
-            }
         }
         else
         {
-            // Nếu chưa login, thì ẩn HorizontalLayout và hiện loginPanel nếu muốn
             if (horizontalLayoutGroup != null)
                 horizontalLayoutGroup.SetActive(false);
         }
     }
-
-
-
 
     void Update()
     {
@@ -180,10 +177,6 @@ public class CognitoLogin : MonoBehaviour
         if (loginPanel != null && loginPanel.activeInHierarchy)
         {
             StartCoroutine(TryLogin());
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ loginPanel đang bị ẩn hoặc null!");
         }
     }
 
@@ -227,6 +220,10 @@ public class CognitoLogin : MonoBehaviour
             {
                 Debug.Log("✅ Đăng nhập thành công!");
 
+                var authResult = JsonUtility.FromJson<AuthResponse>(responseText);
+                accessToken = authResult.AuthenticationResult.AccessToken;
+                idToken = authResult.AuthenticationResult.IdToken;
+
                 string username = email.Split('@')[0];
                 string phone = "Chưa cập nhật";
 
@@ -234,6 +231,7 @@ public class CognitoLogin : MonoBehaviour
                 PlayerPrefs.SetString("LoggedEmail", email);
                 PlayerPrefs.SetString("LoggedPhone", phone);
                 PlayerPrefs.SetInt("IsLoggedIn", 1);
+                Debug.Log(PlayerPrefs.GetString("LoggedEmail", ""));
                 PlayerPrefs.Save();
 
                 if (GameManager.Instance != null)
@@ -242,6 +240,11 @@ public class CognitoLogin : MonoBehaviour
                     GameManager.Instance.PlayerData.email = email;
                     GameManager.Instance.PlayerData.phone = phone;
                     GameManager.Instance.SavePlayerData();
+
+                    // Lưu dữ liệu lên cloud
+                    string gameDataJson = JsonUtility.ToJson(GameManager.Instance.PlayerData);
+                    Debug.Log("📦 Dữ liệu game: " + gameDataJson);
+                    StartCoroutine(SaveGameDataToCloud(email, gameDataJson));
                 }
 
                 if (loginButtonText != null)
@@ -267,13 +270,14 @@ public class CognitoLogin : MonoBehaviour
             else
             {
                 Debug.LogError("❌ Sai thông tin đăng nhập!");
-                Debug.Log("Phản hồi: " + responseText);
             }
         }
         else
         {
             Debug.LogError("❌ Lỗi đăng nhập: " + request.downloadHandler.text);
         }
+
+        request.Dispose();
     }
 
     void OnUserButtonClicked()
@@ -304,12 +308,319 @@ public class CognitoLogin : MonoBehaviour
 
     void OnBackToHorizontalLayout()
     {
-        Debug.Log("🔙 Quay lại HorizontalLayout từ loginPanel");
-
         if (loginPanel != null)
             loginPanel.SetActive(false);
 
         if (horizontalLayoutGroup != null)
             horizontalLayoutGroup.SetActive(true);
+    }
+
+    // Classes để parse JSON response
+    [System.Serializable]
+    public class AuthResponse
+    {
+        public AuthenticationResult AuthenticationResult;
+    }
+
+    [System.Serializable]
+    public class AuthenticationResult
+    {
+        public string AccessToken;
+        public string IdToken;
+    }
+
+    [System.Serializable]
+    public class GetIdResponse
+    {
+        public string IdentityId;
+    }
+
+    [System.Serializable]
+    public class CredentialsResponse
+    {
+        public Credentials Credentials;
+    }
+
+    [System.Serializable]
+    public class Credentials
+    {
+        public string AccessKeyId;
+        public string SecretKey;
+        public string SessionToken;
+    }
+
+    // Lưu dữ liệu game lên DynamoDB với IdToken
+    private IEnumerator SaveGameDataToCloud(string userId, string gameData)
+    {
+        Debug.Log("🔄 Bắt đầu lưu dữ liệu lên cloud...");
+        Debug.Log($"📦 UserId: {userId}");
+        Debug.Log($"📦 GameData: {gameData}");
+        Debug.Log($"📦 IdToken có: {!string.IsNullOrEmpty(idToken)}");
+
+        // TẠMTHỜI BỎ QUA AWS CALLS ĐỂ TEST
+        Debug.Log("⚠️ Tạm thời bỏ qua AWS calls để test...");
+
+        yield return new WaitForSeconds(1f);
+
+        Debug.Log("✅ Giả lập lưu dữ liệu thành công!");
+
+        /* AWS CALLS - SẼ ENABLE LẠI SAU
+        if (string.IsNullOrEmpty(idToken))
+        {
+            Debug.LogError("❌ Không có IdToken!");
+            yield break;
+        }
+
+        // Bước 1: Lấy Identity ID
+        yield return StartCoroutine(GetIdentityId());
+        if (string.IsNullOrEmpty(identityId))
+        {
+            Debug.LogError("❌ Không lấy được Identity ID!");
+            yield break;
+        }
+
+        // Bước 2: Lấy temporary credentials
+        yield return StartCoroutine(GetTemporaryCredentials());
+        if (string.IsNullOrEmpty(awsAccessKey))
+        {
+            Debug.LogError("❌ Không lấy được AWS credentials!");
+            yield break;
+        }
+
+        // Bước 3: Lưu dữ liệu lên DynamoDB
+        yield return StartCoroutine(PutItemToDynamoDB(userId, gameData));
+        */
+    }
+
+    // Bước 1: Lấy Identity ID từ Cognito Identity Pool
+    public IEnumerator GetIdentityId()
+    {
+        if (string.IsNullOrEmpty(idToken))
+        {
+            Debug.LogError("❌ Không có IdToken!");
+            yield break;
+        }
+
+        Debug.Log("🔄 Bắt đầu lấy Identity ID...");
+        string url = $"https://cognito-identity.{region}.amazonaws.com/";
+        string loginkey = $"cognito-idp.{region}.amazonaws.com/{userPoolId}";
+
+        // Tạo payload JSON sạch hơn
+        string payload = $@"{{
+        ""IdentityPoolId"":""{identityPoolId}"",
+        ""Logins"":{{
+        ""{loginkey}"":""{idToken}""
+        }}
+        }}";
+
+        Debug.Log("📤 URL: " + url);
+        Debug.Log("📤 Payload: " + payload);
+
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(payload);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/x-amz-json-1.1");
+        request.SetRequestHeader("X-Amz-Target", "AWSCognitoIdentityService.GetId");
+        request.timeout = 15;
+
+        Debug.Log("🔄 Đang gửi request...");
+
+        // float startTime = Time.time;
+        yield return request.SendWebRequest();
+        float endTime = Time.time;
+
+        // Debug.Log($"⏱️ Request mất {endTime - startTime:F2} giây");
+        Debug.Log($"🔍 Request result: {request.result}");
+        Debug.Log($"🔍 Response code: {request.responseCode}");
+        Debug.Log($"🔍 Response text: {request.downloadHandler.text}");
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            try
+            {
+                var response = JsonUtility.FromJson<GetIdResponse>(request.downloadHandler.text);
+                identityId = response.IdentityId;
+                Debug.Log("✅ Đã lấy Identity ID: " + identityId);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("❌ Lỗi parse JSON: " + e.Message);
+            }
+        }
+        else
+        {
+            Debug.LogError($"❌ Lỗi lấy Identity ID: {request.error}");
+            Debug.LogError($"❌ Response: {request.downloadHandler.text}");
+        }
+
+        request.Dispose();
+    }
+
+    // Bước 2: Lấy temporary credentials
+    private IEnumerator GetTemporaryCredentials()
+    {
+        Debug.Log("🔑 Bắt đầu lấy temporary credentials...");
+
+        string url = $"https://cognito-identity.{region}.amazonaws.com/";
+        string loginKey = $"cognito-idp.{region}.amazonaws.com/{userPoolId}";
+
+        string payload = $@"{{
+""IdentityId"":""{identityId}"",
+""Logins"":{{
+""{loginKey}"":""{idToken}""
+}}
+}}";
+
+        Debug.Log("📤 Credentials payload: " + payload);
+
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(payload);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/x-amz-json-1.1");
+        request.SetRequestHeader("X-Amz-Target", "AWSCognitoIdentityService.GetCredentialsForIdentity");
+        request.timeout = 15;
+
+        Debug.Log("🔄 Đang gửi credentials request...");
+
+        float startTime = Time.time;
+        yield return request.SendWebRequest();
+        float endTime = Time.time;
+
+        Debug.Log($"⏱️ Credentials request mất {endTime - startTime:F2} giây");
+        Debug.Log($"🔍 Credentials result: {request.result}");
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            try
+            {
+                Debug.Log("📄 Credentials response: " + request.downloadHandler.text);
+                var response = JsonUtility.FromJson<CredentialsResponse>(request.downloadHandler.text);
+                awsAccessKey = response.Credentials.AccessKeyId;
+                awsSecretKey = response.Credentials.SecretKey;
+                awsSessionToken = response.Credentials.SessionToken;
+                Debug.Log("✅ Đã lấy temporary credentials thành công");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("❌ Lỗi parse credentials JSON: " + e.Message);
+            }
+        }
+        else
+        {
+            Debug.LogError($"❌ Lỗi lấy credentials: {request.error}");
+            Debug.LogError($"❌ Credentials response: {request.downloadHandler.text}");
+        }
+
+        request.Dispose();
+    }
+
+    // Bước 3: Lưu dữ liệu lên DynamoDB với AWS Signature V4
+    private IEnumerator PutItemToDynamoDB(string userId, string gameData)
+    {
+        Debug.Log("💾 Lưu dữ liệu lên DynamoDB...");
+
+        string host = $"dynamodb.{region}.amazonaws.com";
+        string url = $"https://{host}/";
+
+        string payload = $@"
+        {{
+            ""TableName"": ""{dynamoTableName}"",
+            ""Item"": {{
+                ""userId"": {{""S"": ""{userId}""}},
+                ""gameData"": {{""S"": ""{gameData}""}},
+                ""lastUpdated"": {{""S"": ""{DateTime.UtcNow:yyyy-MM-ddTHH:mm:ssZ}""}}
+            }}
+        }}";
+
+        // Tạo AWS Signature V4
+        string dateTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ");
+        string date = DateTime.UtcNow.ToString("yyyyMMdd");
+
+        // Tạo canonical request
+        string canonicalHeaders = $"host:{host}\nx-amz-date:{dateTime}\nx-amz-security-token:{awsSessionToken}\nx-amz-target:DynamoDB_20120810.PutItem\n";
+        string signedHeaders = "host;x-amz-date;x-amz-security-token;x-amz-target";
+
+        string payloadHash = ComputeSHA256Hash(payload);
+        string canonicalRequest = $"POST\n/\n\n{canonicalHeaders}\n{signedHeaders}\n{payloadHash}";
+
+        // Tạo string to sign
+        string credentialScope = $"{date}/{region}/dynamodb/aws4_request";
+        string stringToSign = $"AWS4-HMAC-SHA256\n{dateTime}\n{credentialScope}\n{ComputeSHA256Hash(canonicalRequest)}";
+
+        // Tạo signing key
+        byte[] signingKey = GetSigningKey(awsSecretKey, date, region, "dynamodb");
+        string signature = ComputeHMACSHA256(stringToSign, signingKey);
+
+        // Tạo authorization header
+        string authHeader = $"AWS4-HMAC-SHA256 Credential={awsAccessKey}/{credentialScope}, SignedHeaders={signedHeaders}, Signature={signature}";
+
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(payload);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/x-amz-json-1.0");
+        request.SetRequestHeader("X-Amz-Target", "DynamoDB_20120810.PutItem");
+        request.SetRequestHeader("Host", host);
+        request.SetRequestHeader("X-Amz-Date", dateTime);
+        request.SetRequestHeader("X-Amz-Security-Token", awsSessionToken);
+        request.SetRequestHeader("Authorization", authHeader);
+        request.timeout = 15;
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("✅ Đã lưu dữ liệu lên DynamoDB thành công!");
+            Debug.Log("📄 Response: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("❌ Lỗi lưu dữ liệu: " + request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
+    // Helper methods cho AWS Signature V4
+    private string ComputeSHA256Hash(string input)
+    {
+        using (var sha256 = System.Security.Cryptography.SHA256.Create())
+        {
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return BitConverter.ToString(bytes).Replace("-", "").ToLower();
+        }
+    }
+
+    private byte[] GetSigningKey(string secretKey, string date, string region, string service)
+    {
+        byte[] kDate = ComputeHMACSHA256Bytes("AWS4" + secretKey, date);
+        byte[] kRegion = ComputeHMACSHA256Bytes(kDate, region);
+        byte[] kService = ComputeHMACSHA256Bytes(kRegion, service);
+        return ComputeHMACSHA256Bytes(kService, "aws4_request");
+    }
+
+    private string ComputeHMACSHA256(string data, byte[] key)
+    {
+        using (var hmac = new System.Security.Cryptography.HMACSHA256(key))
+        {
+            byte[] bytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+            return BitConverter.ToString(bytes).Replace("-", "").ToLower();
+        }
+    }
+
+    private byte[] ComputeHMACSHA256Bytes(string data, string key)
+    {
+        return ComputeHMACSHA256Bytes(Encoding.UTF8.GetBytes(key), data);
+    }
+
+    private byte[] ComputeHMACSHA256Bytes(byte[] key, string data)
+    {
+        using (var hmac = new System.Security.Cryptography.HMACSHA256(key))
+        {
+            return hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+        }
     }
 }

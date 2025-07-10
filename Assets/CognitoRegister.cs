@@ -17,7 +17,7 @@ public class CognitoRegister : MonoBehaviour
 
     public GameObject loginPanel;
 
-    private string clientId = "1iv1l3avi8ah3gn2b3ua03i81v"; // Thay bằng Client ID thật
+    private string clientId = "5p8jmsjfbflsmvlkuvlm2tf5sj"; // Thay bằng Client ID thật
     private string region = "ap-southeast-2";   // Region của bạn
 
 
