@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tạo bảng dữ liệu trên DynamoDB và cấu hình các phần cần thiết on AWS System Manager</title>
-    <link>//localhost:1313/vi/3-accessibilitytoinstances/3.1-public-instance/</link>
+    <link>/vi/3-accessibilitytoinstances/3.1-public-instance/</link>
     <description>Recent content in Tạo bảng dữ liệu trên DynamoDB và cấu hình các phần cần thiết on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="//localhost:1313/vi/3-accessibilitytoinstances/3.1-public-instance/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/vi/3-accessibilitytoinstances/3.1-public-instance/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
