@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tạo user pool on AWS System Manager</title>
-    <link>https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.1-createuserpool/</link>
+    <link>/vi/2-prerequiste-copy/2.1-createuserpool/</link>
     <description>Recent content in Tạo user pool on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.1-createuserpool/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/vi/2-prerequiste-copy/2.1-createuserpool/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

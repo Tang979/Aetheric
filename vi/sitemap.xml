@@ -2,145 +2,301 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://tang979.github.io/Aetheric/vi/1-introduce/</loc>
+    <loc>/vi/3-ses_authentication/4.1-amazonses_configuration/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/1-introduce/"
+                href="/3-ses_authentication/4.1-amazonses_configuration/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/1-introduce/"
+                href="/vi/3-ses_authentication/4.1-amazonses_configuration/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/1-introduce/1.1-introduce-services/</loc>
+    <loc>/vi/1-introduce/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/1-introduce/1.1-introduce-services/"
+                href="/1-introduce/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/1-introduce/1.1-introduce-services/"
+                href="/vi/1-introduce/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/</loc>
+    <loc>/vi/1-introduce/1.1-introduce-services/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/"
+                href="/1-introduce/1.1-introduce-services/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/"
+                href="/vi/1-introduce/1.1-introduce-services/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/3-accessibilitytoinstances/3.1-public-instance/</loc>
+    <loc>/vi/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/3-accessibilitytoinstances/3.1-public-instance/"
+                href="/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/3-accessibilitytoinstances/3.1-public-instance/"
+                href="/vi/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.1-createuserpool/</loc>
+    <loc>/vi/4-pushdatafromunitytodynamodb/3.1-dynamodb/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/2-prerequiste-copy/2.1-createuserpool/"
+                href="/4-pushdatafromunitytodynamodb/3.1-dynamodb/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.1-createuserpool/"
+                href="/vi/4-pushdatafromunitytodynamodb/3.1-dynamodb/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.2-check_connection_to_unity/</loc>
+    <loc>/vi/5-s3withunity/4.1-creates3/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/2-prerequiste-copy/2.2-check_connection_to_unity/"
+                href="/5-s3withunity/4.1-creates3/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.2-check_connection_to_unity/"
+                href="/vi/5-s3withunity/4.1-creates3/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/</loc>
+    <loc>/vi/2-prerequiste-copy/2.1-createuserpool/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/2-prerequiste-copy/"
+                href="/2-prerequiste-copy/2.1-createuserpool/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/"
+                href="/vi/2-prerequiste-copy/2.1-createuserpool/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.3-clear/</loc>
+    <loc>/vi/3-ses_authentication/4.2-lambda-configuration/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/2-prerequiste-copy/2.3-clear/"
+                href="/3-ses_authentication/4.2-lambda-configuration/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/2.3-clear/"
+                href="/vi/3-ses_authentication/4.2-lambda-configuration/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/3-accessibilitytoinstances/</loc>
+    <loc>/vi/2-prerequiste-copy/2.2-check_connection_to_unity/</loc>
     <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/3-accessibilitytoinstances/"
+                href="/2-prerequiste-copy/2.2-check_connection_to_unity/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/3-accessibilitytoinstances/"
+                href="/vi/2-prerequiste-copy/2.2-check_connection_to_unity/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/categories/</loc>
+    <loc>/vi/5-s3withunity/4.2-s3unity/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/categories/"
+                href="/5-s3withunity/4.2-s3unity/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/categories/"
+                href="/vi/5-s3withunity/4.2-s3unity/"
                 />
   </url><url>
-    <loc>https://tang979.github.io/Aetheric/vi/tags/</loc>
+    <loc>/vi/4-pushdatafromunitytodynamodb/3.2-lambda/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://tang979.github.io/Aetheric/tags/"
+                href="/4-pushdatafromunitytodynamodb/3.2-lambda/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="https://tang979.github.io/Aetheric/vi/tags/"
+                href="/vi/4-pushdatafromunitytodynamodb/3.2-lambda/"
+                />
+  </url><url>
+    <loc>/vi/2-prerequiste-copy/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/2-prerequiste-copy/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/2-prerequiste-copy/"
+                />
+  </url><url>
+    <loc>/vi/3-ses_authentication/4.3-apigateway_configuration/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/3-ses_authentication/4.3-apigateway_configuration/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/3-ses_authentication/4.3-apigateway_configuration/"
+                />
+  </url><url>
+    <loc>/vi/4-pushdatafromunitytodynamodb/3.3-api-gateway/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/4-pushdatafromunitytodynamodb/3.3-api-gateway/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/4-pushdatafromunitytodynamodb/3.3-api-gateway/"
+                />
+  </url><url>
+    <loc>/vi/2-prerequiste-copy/2.3-clear/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/2-prerequiste-copy/2.3-clear/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/2-prerequiste-copy/2.3-clear/"
+                />
+  </url><url>
+    <loc>/vi/3-ses_authentication/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/3-ses_authentication/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/3-ses_authentication/"
+                />
+  </url><url>
+    <loc>/vi/4-pushdatafromunitytodynamodb/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/4-pushdatafromunitytodynamodb/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/4-pushdatafromunitytodynamodb/"
+                />
+  </url><url>
+    <loc>/vi/3-ses_authentication/4.4-setup_connection_in_unity/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/3-ses_authentication/4.4-setup_connection_in_unity/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/3-ses_authentication/4.4-setup_connection_in_unity/"
+                />
+  </url><url>
+    <loc>/vi/3-ses_authentication/4.5-clear/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/3-ses_authentication/4.5-clear/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/3-ses_authentication/4.5-clear/"
+                />
+  </url><url>
+    <loc>/vi/5-s3withunity/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/5-s3withunity/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/5-s3withunity/"
+                />
+  </url><url>
+    <loc>/vi/6-cleanup/</loc>
+    <lastmod>2025-07-08T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/6-cleanup/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/6-cleanup/"
+                />
+  </url><url>
+    <loc>/vi/categories/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/categories/"
+                />
+  </url><url>
+    <loc>/vi/tags/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="/vi/tags/"
                 />
   </url>
 </urlset>

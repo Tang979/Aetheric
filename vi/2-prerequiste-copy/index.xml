@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Xác thực tài khoản bằng Amazon Cognito on AWS System Manager</title>
-    <link>https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/</link>
+    <link>/vi/2-prerequiste-copy/</link>
     <description>Recent content in Xác thực tài khoản bằng Amazon Cognito on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="https://tang979.github.io/Aetheric/vi/2-prerequiste-copy/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/vi/2-prerequiste-copy/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
