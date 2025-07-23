@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cấu hình API Gateway để sử dụng Lambda tương tác với DynamoDB on AWS System Manager</title>
-    <link>/vi/4-pushdatafromunitytodynamodb/3.3-api-gateway/</link>
+    <link>https://tang979.github.io/Aetheric/vi/4-pushdatafromunitytodynamodb/3.3-api-gateway/</link>
     <description>Recent content in Cấu hình API Gateway để sử dụng Lambda tương tác với DynamoDB on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="/vi/4-pushdatafromunitytodynamodb/3.3-api-gateway/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tang979.github.io/Aetheric/vi/4-pushdatafromunitytodynamodb/3.3-api-gateway/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tạo S3 Bucket cho Asset Game on AWS System Manager</title>
-    <link>/vi/5-s3withunity/4.1-creates3/</link>
+    <link>https://tang979.github.io/Aetheric/vi/5-s3withunity/4.1-creates3/</link>
     <description>Recent content in Tạo S3 Bucket cho Asset Game on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="/vi/5-s3withunity/4.1-creates3/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tang979.github.io/Aetheric/vi/5-s3withunity/4.1-creates3/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

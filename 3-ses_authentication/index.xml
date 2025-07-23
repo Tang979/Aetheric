@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Using Amazon SES to Send Emails from User to Server on AWS System Manager</title>
-    <link>/3-ses_authentication/</link>
+    <link>https://tang979.github.io/Aetheric/3-ses_authentication/</link>
     <description>Recent content in Using Amazon SES to Send Emails from User to Server on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="/3-ses_authentication/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tang979.github.io/Aetheric/3-ses_authentication/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

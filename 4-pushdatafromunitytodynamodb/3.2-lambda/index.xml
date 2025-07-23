@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Create DynamoDB Table and Configure Required Permissions on AWS System Manager</title>
-    <link>/4-pushdatafromunitytodynamodb/3.2-lambda/</link>
+    <link>https://tang979.github.io/Aetheric/4-pushdatafromunitytodynamodb/3.2-lambda/</link>
     <description>Recent content in Create DynamoDB Table and Configure Required Permissions on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="/4-pushdatafromunitytodynamodb/3.2-lambda/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tang979.github.io/Aetheric/4-pushdatafromunitytodynamodb/3.2-lambda/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

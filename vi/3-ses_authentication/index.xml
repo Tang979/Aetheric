@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sử dụng dịch vụ Amazon SES gửi email từ User lên Sever on AWS System Manager</title>
-    <link>/vi/3-ses_authentication/</link>
+    <link>https://tang979.github.io/Aetheric/vi/3-ses_authentication/</link>
     <description>Recent content in Sử dụng dịch vụ Amazon SES gửi email từ User lên Sever on AWS System Manager</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="/vi/3-ses_authentication/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tang979.github.io/Aetheric/vi/3-ses_authentication/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
