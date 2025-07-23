@@ -15272,14 +15272,17 @@ MonoBehaviour:
   passwordInput: {fileID: 1166387824}
   SubmitButton: {fileID: 436219654}
   registerButton: {fileID: 1726210783}
+  backButton: {fileID: 0}
   loginPanel: {fileID: 407047818}
   registerPanel: {fileID: 1717309156}
-  loginView: {fileID: 921144963}
-  mainMenuView: {fileID: 1988732642}
-  loginFlowButton: {fileID: 1975275770}
-  loginText: {fileID: 1755821062}
+  userPanel: {fileID: 0}
+  horizontalLayoutGroup: {fileID: 0}
+  userButton: {fileID: 0}
+  loginButtonText: {fileID: 0}
   region: ap-southeast-2
   clientId: 1iv1l3avi8ah3gn2b3ua03i81v
+  loginText: {fileID: 1755821062}
+  userInfoToggle: {fileID: 0}
 --- !u!1 &408279274
 GameObject:
   m_ObjectHideFlags: 0
@@ -61184,10 +61187,15 @@ MonoBehaviour:
   userButton: {fileID: 1084649725}
   horizontalLayout: {fileID: 1196429497}
   userPanel: {fileID: 1608909162}
+  loginPanel: {fileID: 0}
   usernameText: {fileID: 1985448684}
   emailText: {fileID: 635498110}
   phoneText: {fileID: 987906158}
+  userButtonText: {fileID: 0}
   backButton: {fileID: 813268876}
+  logoutButton: {fileID: 0}
+  feedbackInput: {fileID: 0}
+  sendFeedbackButton: {fileID: 0}
 --- !u!114 &1608909165
 MonoBehaviour:
   m_ObjectHideFlags: 0
