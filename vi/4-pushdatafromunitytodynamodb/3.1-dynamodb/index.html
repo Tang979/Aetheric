@@ -872,7 +872,7 @@
 <ol>
 <li>
 <p>Truy cập vào <a href="https://ap-southeast-2.console.aws.amazon.com/dynamodbv2/home">giao diện quản trị của dịch vụ DynamoDB</a> chọn <strong>Create table</strong>.</p>
-<p><img src="/images/3.connect/create-table.png" alt="dynamodb"></p>
+<p><img src="/Aetheric/images/3.connect/create-table.png" alt="dynamodb"></p>
 </li>
 <li>
 <p>Thiết lập thông tin bảng.</p>
@@ -881,18 +881,18 @@
 <li>Nhập <strong>Partition key</strong> đây chính là primary key cho table của bạn bạn có thể <strong>chọn kiểu dữ liệu</strong> của key ở bên cạnh.</li>
 <li>Click <strong>Create table</strong>.</li>
 </ul>
-<p><img src="/images/3.connect/config-table.png" alt="dynamodb"></p>
+<p><img src="/Aetheric/images/3.connect/config-table.png" alt="dynamodb"></p>
 </li>
 <li>
 <p>Truy cập vào <a href="https://ap-southeast-2.console.aws.amazon.com/cognito/">Cognito</a>.</p>
 <ul>
 <li>Click chọn <strong>Identity pools</strong>.</li>
 <li>Click chọn <strong>Create identity pool</strong>.
-<img src="/images/3.connect/create-identitypools.png" alt="connectprivate"></li>
+<img src="/Aetheric/images/3.connect/create-identitypools.png" alt="connectprivate"></li>
 <li>Chọn <strong>Authenticated access</strong> sau đó chọn những loại đăng nhập mà bạn muốn xác thực sau đó chọn <strong>Next</strong>.
-<img src="/images/3.connect/identitypool1.png" alt="connectprivate"></li>
+<img src="/Aetheric/images/3.connect/identitypool1.png" alt="connectprivate"></li>
 <li>Đặt tên cho <strong>IAM role name</strong> sau đó chọn <strong>Next</strong>.
-<img src="/images/3.connect/identitypool2.png" alt="connectprivate"></li>
+<img src="/Aetheric/images/3.connect/identitypool2.png" alt="connectprivate"></li>
 <li>Ở đậy chúng ta sẽ chọn <strong>User pool ID</strong>  mà bạn muốn xác thực và chọn <strong>App client ID</strong> tương ứng sau đó chọn <strong>Next</strong>.</li>
 <li>Đặt tên cho <strong>Identity pool</strong> sau đó bạn có thể chọn <strong>Next</strong> xem lại các thông tin đã cấu hình và chọn <strong>Create identity pool</strong>.</li>
 </ul>
@@ -904,11 +904,11 @@
 <p>Chọn <strong>Create plolicy</strong>.</p>
 </li>
 <li>
-<p><img src="/images/3.connect/policy1.png" alt="connectprivate"></p>
+<p><img src="/Aetheric/images/3.connect/policy1.png" alt="connectprivate"></p>
 </li>
 <li>
 <p>Chuyển sang chỉnh sửa Json và cập nhật lại quyền truy cập vào DynamoDB như sau:
-<img src="/images/3.connect/policy2.png" alt="connectprivate"></p>
+<img src="/Aetheric/images/3.connect/policy2.png" alt="connectprivate"></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Statement&#34;</span>: [
@@ -936,12 +936,12 @@
 <p>Truy cập vào <a href="https://us-east-1.console.aws.amazon.com/iam/home">giao diện quản trị của dịch vụ IAM</a></p>
 <ul>
 <li>Chọn <strong>Roles</strong> ở thanh trượt bên trái chọn vào Role mà bạn đã đặt tên lúc tạo <strong>Identity pool</strong>.
-<img src="/images/3.connect/role.png" alt="connectprivate"></li>
+<img src="/Aetheric/images/3.connect/role.png" alt="connectprivate"></li>
 <li>Chọn <strong>Add permissions</strong> sau đó chọn <strong>Attach polichies</strong>.
-<img src="/images/3.connect/role3.png" alt="connectprivate"></li>
+<img src="/Aetheric/images/3.connect/role3.png" alt="connectprivate"></li>
 <li><strong>Tìm tên</strong> và chọn <strong>Policy</strong> mà bạn vừa tạo sau đó chọn <strong>Add permissions</strong>.</li>
 <li>Sau đó chọn tab <strong>Trust relationships</strong> chọn <strong>Edit tust policy</strong>.
-<img src="/images/3.connect/role2.png" alt="connectprivate"></li>
+<img src="/Aetheric/images/3.connect/role2.png" alt="connectprivate"></li>
 <li>Cập nhật lại quyền mới như sau:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
