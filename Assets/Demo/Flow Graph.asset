@@ -84,7 +84,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 1
   ClearGraphHistory: 0
-  Position: {x: 602.14526, y: 104.80002}
+  Position: {x: 610.4, y: 134.8}
   GetSceneBy: 0
   LoadSceneMode: 0
   AllowSceneActivation: 1
@@ -461,8 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
   m_Name: Flow Graph
   m_EditorClassIdentifier: 
-  EditorPosition: {x: 139.2, y: 12.8, z: 0}
-  EditorScale: {x: 0.65751624, y: 0.65751624, z: 1}
+  EditorPosition: {x: 112, y: 77.6, z: 0}
+  EditorScale: {x: 0.57175326, y: 0.57175326, z: 1}
   Id: f59511ad-a808-44e9-889c-5a5f3b07678a
   GraphName: Flow Graph
   GraphDescription: 
@@ -763,7 +763,7 @@ MonoBehaviour:
   Passthrough: 1
   ClearGraphHistory: 0
   Position: {x: 902.1991, y: 541.45636}
-  PivotOrientation: 2
+  PivotOrientation: 3
 --- !u!114 &6550083903805293464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,7 +876,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 0
   ClearGraphHistory: 0
-  Position: {x: 650.4, y: 308}
+  Position: {x: 648.7999, y: 370.9642}
   OnEnterShowViews:
   - Id:
       Category: Demo

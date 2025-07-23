@@ -2222,6 +2222,10 @@ PrefabInstance:
       propertyPath: 'Path.Array.data[2]'
       value: 
       objectReference: {fileID: 1009060897}
+    - target: {fileID: 6724895271447052094, guid: 09e75b9703df69c4e80d464fd5cd0a52, type: 3}
+      propertyPath: Id.Custom
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

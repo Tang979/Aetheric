@@ -197,6 +197,17 @@ public class GameManager : MonoBehaviour
         return PlayerData.Team.Count == 5;
     }
 
+    internal void ClearLoginInfo()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.PlayerData != null)
+        {
+            GameManager.Instance.PlayerData.username = "Guest";
+            GameManager.Instance.PlayerData.email = "";
+            GameManager.Instance.PlayerData.phone = "";
+            GameManager.Instance.PlayerData.lastFeedback = "";
+            GameManager.Instance.SavePlayerData();
+        }
+    }
 }
 
 [Serializable]
@@ -210,6 +221,7 @@ public class PlayerData
     public string username;
     public string email;
     public string phone;
+    internal string lastFeedback;
 
     public void AddTowerCard(string towerName, int quantity)
     {
