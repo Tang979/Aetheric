@@ -1,5 +1,5 @@
 # Change the default theme to be use when building the site with Hugo
-baseURL = "https://tang979.github.io/Aetheric"
+baseURL = "https://tang979.github.io/Aetheric/"
 theme = "hugo-theme-learn"
 
 
