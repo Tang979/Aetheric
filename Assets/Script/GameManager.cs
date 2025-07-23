@@ -7,10 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public PlayerData PlayerData { get; private set; }
+    public PlayerData PlayerData { get; protected set; }
     [SerializeField] public TowerCardDatabase towerCardDatabase;
 
-    private string savePath => Path.Combine(Application.persistentDataPath, "playerdata.json");
+    protected string savePath => Path.Combine(Application.persistentDataPath, "playerdata.json");
 
     private void Awake()
     {
@@ -24,8 +24,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         LoadPlayerData();
-        Debug.Log("Player data loaded from: " + savePath);
-        Debug.Log("Tower cards owned: " + PlayerData.ownedTowerCards.Count);
+        
     }
 
     public void LoadPlayerData()
@@ -37,14 +36,17 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            PlayerData = new PlayerData()
+            Initplayer();
+        }
+    }
+
+    public void Initplayer()
+    {
+        PlayerData = new PlayerData()
             {
                 levelProgresses = new List<LevelProgress>(),
                 ownedTowerCards = new List<TowerCard>(),
-                Team = new List<string>(5),
-                username = "Guest",
-                email = "unknown@email.com",
-                phone = "N/A"
+                Team = new List<string>(5)
             };
 
             // Cấp 6 tháp mặc định cho người chơi
@@ -57,7 +59,12 @@ public class GameManager : MonoBehaviour
             }
 
             SavePlayerData();
-        }
+    }
+
+    public void SetPlayerData(PlayerData data)
+    {
+        PlayerData = data;
+        SavePlayerData();
     }
 
     public void InitDefaultTowerCards(TowerData tower)

@@ -1,0 +1,10 @@
+{
+    "currentEvent": "winter",
+    "eventStartDate": "2024-01-15",
+    "eventEndDate": "2024-03-15",
+    "eventMessage": "Winter Event is Live! Enjoy special winter towers and backgrounds!",
+    "forceUpdate": false,
+    "eventAssets": [
+        "/backgrounds/winter_main_menu.jpg"
+    ]
+}

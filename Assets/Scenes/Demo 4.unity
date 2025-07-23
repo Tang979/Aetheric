@@ -12701,6 +12701,8 @@ GameObject:
   - component: {fileID: 310545348}
   - component: {fileID: 310545350}
   - component: {fileID: 310545349}
+  - component: {fileID: 310545352}
+  - component: {fileID: 310545351}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -12770,6 +12772,47 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310545347}
   m_CullTransparentMesh: 1
+--- !u!114 &310545351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310545347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa5e09b8c38e3042b9816a6fe8fe3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundImage: {fileID: 310545349}
+  defaultBackground: {fileID: 6834357693185609960, guid: 86678f993cae0dd4ebd99ecc0512de03, type: 3}
+  s3BaseUrl: https://aetheric-game-assets.s3.ap-southeast-2.amazonaws.com
+  winterBackgroundPath: /backgrounds/winter_main_menu.jpg
+  halloweenBackgroundPath: /backgrounds/halloween_main_menu.jpg
+  christmasBackgroundPath: /backgrounds/christmas_main_menu.jpg
+  summerBackgroundPath: /backgrounds/summer_main_menu.jpg
+  useTransition: 1
+  transitionSpeed: 0.5
+--- !u!114 &310545352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310545347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b43ae46823fa354ea355aa5d027011e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlMode: 3
+  manualEvent: none
+  developmentMode: 1
+  testEvent: 
+  configUrl: https://aetheric-game-assets.s3.ap-southeast-2.amazonaws.com/config/events.json
+  configRefreshTime: 3600
+  cleanupExpiredEventAssets: 1
+  immediateCleanupWhenEventEnds: 1
 --- !u!1 &313036366
 GameObject:
   m_ObjectHideFlags: 0
@@ -64755,6 +64798,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1713013079}
   - component: {fileID: 1713013078}
+  - component: {fileID: 1713013080}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -64790,6 +64834,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1713013080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713013077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac23dbf77cfb4e4795db53bc2f7b53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1717309156
 GameObject:
   m_ObjectHideFlags: 0
